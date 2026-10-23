@@ -31,6 +31,46 @@ function run(fn, ms = 120) {
   })
 }
 
+/* ------------------------------------------------------------------ */
+/* 云开发通道                                                          */
+/* ------------------------------------------------------------------ */
+
+/** 统一云函数名，对应 cloudfunctions/api */
+const CLOUD_FUNCTION = 'api'
+
+/** 云通道是否就绪：由 app.js 完成 wx.cloud.init 后调用 enableCloud 打开 */
+let cloudEnabled = false
+
+function enableCloud() {
+  cloudEnabled = typeof wx !== 'undefined' && !!wx.cloud && typeof wx.cloud.callFunction === 'function'
+  return cloudEnabled
+}
+
+/**
+ * 调用云函数 api，统一解包 { ok: true, data } / { ok: false, message }。
+ * 各域接入时把 run(() => ...) 换成 cloudCall('域.方法', 参数)，
+ * 导出函数的名称、参数与返回结构保持不变。
+ */
+function cloudCall(action, params = {}) {
+  return wx.cloud.callFunction({ name: CLOUD_FUNCTION, data: { action, params } }).then((res) => {
+    const result = (res && res.result) || {}
+    if (result.ok === false) {
+      const err = new Error(result.message || '云服务调用失败')
+      err.friendly = true
+      throw err
+    }
+    return result.data === undefined ? null : result.data
+  })
+}
+
+/** 云函数返回的真实身份（OPENID），用于取代硬编码的 CURRENT_USER_ID */
+function getCloudIdentity() {
+  if (!cloudEnabled) {
+    return Promise.reject(new Error('云开发未就绪，无法获取身份'))
+  }
+  return cloudCall('user.whoami')
+}
+
 function assert(condition, message) {
   if (!condition) {
     const err = new Error(message)
@@ -2932,4 +2972,7 @@ module.exports = {
   getNoticePackages,
   createNoticeOrder,
   contactNoticePublisher,
+  /* 云开发通道：供 app.js 打开云通道并校验身份，不影响上面任何业务接口的签名 */
+  enableCloud,
+  getCloudIdentity,
 }
