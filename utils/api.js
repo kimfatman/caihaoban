@@ -71,6 +71,17 @@ function getCloudIdentity() {
   return cloudCall('user.whoami')
 }
 
+/**
+ * 云函数建档/登录：首次进入时在 users 集合建档，返回真实 userId。
+ * 重复调用返回同一用户，不涉及任何现有业务接口。
+ */
+function cloudLogin() {
+  if (!cloudEnabled) {
+    return Promise.reject(new Error('云开发未就绪，无法登录'))
+  }
+  return cloudCall('user.login', {})
+}
+
 function assert(condition, message) {
   if (!condition) {
     const err = new Error(message)
@@ -2975,4 +2986,5 @@ module.exports = {
   /* 云开发通道：供 app.js 打开云通道并校验身份，不影响上面任何业务接口的签名 */
   enableCloud,
   getCloudIdentity,
+  cloudLogin,
 }

@@ -15,7 +15,13 @@ const sdkStub = {
   DYNAMIC_CURRENT_ENV: 'DYNAMIC_CURRENT_ENV',
   init() {},
   database() {
-    return { collection: (name) => ({ name }) }
+    // 路由测试不关心数据：一律返回空结果，等同于「用户未建档」
+    return {
+      collection: (name) => ({
+        name,
+        where: () => ({ limit: () => ({ get: async () => ({ data: [] }) }) }),
+      }),
+    }
   },
   getWXContext() {
     return { OPENID: stubOpenid, APPID, UNIONID: undefined }

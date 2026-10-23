@@ -47,8 +47,21 @@ App({
       .then((identity) => {
         this.globalData.cloudIdentity = identity
         console.log('[cloud] 身份就绪 openid=', identity.openid)
+        if (!identity.bound) return this.registerCloudUser()
+        return identity
       })
       .catch((err) => console.warn('[cloud] 身份获取失败：', err.message))
+  },
+
+  /** 首次进入：在 users 集合建档，拿到后续业务要用的真实 userId */
+  registerCloudUser() {
+    return api
+      .cloudLogin()
+      .then((res) => {
+        this.globalData.cloudIdentity = Object.assign({}, this.globalData.cloudIdentity, res)
+        console.log('[cloud] 建档完成 userId=', res.userId)
+      })
+      .catch((err) => console.warn('[cloud] 建档失败：', err.message))
   },
 
   refreshSession() {
