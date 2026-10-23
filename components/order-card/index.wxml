@@ -1,0 +1,23 @@
+<view class="oc" bindtap="onTap" hover-class="oc-hover">
+  <view class="oc-head">
+    <text class="oc-no">订单号 {{order.no}}</text>
+    <status-tag label="{{order.statusLabel}}" tag="{{order.statusTag}}" />
+  </view>
+  <text class="oc-title">{{order.taskTitle}}</text>
+  <view class="oc-tags">
+    <text class="tag tag-plain">{{order.serviceTypeLabel}}</text>
+    <text class="tag tag-plain">{{order.sideLabel}}</text>
+    <text class="tag tag-warn" wx:if="{{order.pendingFeeChanges > 0}}">费用待确认</text>
+    <text class="tag tag-warn" wx:if="{{order.pendingPayments > 0}}">收付款待确认</text>
+  </view>
+  <view class="oc-foot">
+    <view class="oc-col">
+      <text class="oc-amount">{{order.totalText}}</text>
+      <text class="oc-org ellipsis">{{order.counterpart.orgName}}</text>
+    </view>
+    <view class="oc-col oc-right">
+      <text class="oc-meta">期望完成 {{order.expectedFinishText}}</text>
+      <text class="oc-meta">{{order.roleText}}确认人：{{order.roleText === '需求方' ? order.demander.name : order.supplier.name}}</text>
+    </view>
+  </view>
+</view>

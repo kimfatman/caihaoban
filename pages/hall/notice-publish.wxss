@@ -1,0 +1,66 @@
+.form-group {
+  padding-bottom: 20rpx;
+}
+
+/* 分类多选 */
+.np-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.np-chip {
+  flex: 0 1 auto;
+  min-height: 60rpx;
+  padding: 0 24rpx;
+  border-radius: 30rpx;
+  background: #f5f6f8;
+  color: #4e5969;
+  font-size: 24rpx;
+  display: inline-flex;
+  align-items: center;
+}
+
+.np-chip.active {
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-weight: 500;
+}
+
+/* 套餐说明 */
+.np-package {
+  margin: 20rpx 24rpx 0;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: #fff;
+}
+
+.np-package-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2329;
+  margin-bottom: 14rpx;
+}
+
+.np-package-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 26rpx;
+  color: #4e5969;
+}
+
+.np-free {
+  font-size: 22rpx;
+  color: #12b76a;
+}
+
+.np-demo {
+  margin-top: 14rpx;
+  padding: 14rpx 16rpx;
+  border-radius: 10rpx;
+  background: #fef4e6;
+  font-size: 21rpx;
+  line-height: 1.6;
+  color: #b25f00;
+}

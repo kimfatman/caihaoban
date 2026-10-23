@@ -1,0 +1,23 @@
+<view class="ua" style="width:{{size}}rpx;height:{{size}}rpx;">
+  <image
+    wx:if="{{view.type === 'image' && view.src}}"
+    class="ua-img"
+    src="{{view.src}}"
+    mode="aspectFill"
+    style="border-radius:{{radius}}rpx;"
+  />
+  <view
+    wx:else
+    class="ua-text {{view.tone}}"
+    style="font-size:{{fontSize}}rpx;border-radius:{{radius}}rpx;"
+  >{{view.text}}</view>
+
+  <view class="ua-tags {{place}}" wx:if="{{showTags && tags.length > 0}}">
+    <view
+      class="ua-tag {{item.type}}"
+      wx:for="{{tags}}"
+      wx:key="key"
+      style="width:{{tagSize}}rpx;height:{{tagSize}}rpx;font-size:{{tagFont}}rpx;"
+    >{{item.text}}</view>
+  </view>
+</view>

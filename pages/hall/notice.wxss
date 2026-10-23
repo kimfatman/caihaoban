@@ -1,0 +1,257 @@
+/* 同行公告列表：沿用任务大厅的浅色底 + 白卡 + 轻量标签 */
+
+.nt-filter {
+  background: #fff;
+  padding: 20rpx 24rpx 12rpx;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nt-filter .search-bar {
+  border: 1rpx solid #ebedf0;
+  background: #f7f8fa;
+}
+
+.search-label {
+  font-size: 24rpx;
+  color: #8a9099;
+  margin-right: 12rpx;
+}
+
+.search-action {
+  font-size: 26rpx;
+  color: #1b6ef3;
+  padding-left: 16rpx;
+  border-left: 1rpx solid #e3e6eb;
+}
+
+/* 全部公告 / 我的发布 */
+.nt-mode {
+  display: flex;
+  gap: 40rpx;
+  margin-top: 20rpx;
+}
+
+.nt-mode-item {
+  position: relative;
+  font-size: 27rpx;
+  color: #6b7280;
+  padding-bottom: 12rpx;
+}
+
+.nt-mode-item.active {
+  color: #1f2329;
+  font-weight: 600;
+}
+
+.nt-mode-item.active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 40rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  background: #1b6ef3;
+  transform: translateX(-50%);
+}
+
+.category-scroll {
+  background: #fff;
+  white-space: nowrap;
+  border-top: 1rpx solid #f2f3f5;
+}
+
+.category-scroll .chips {
+  padding: 16rpx 24rpx 20rpx;
+}
+
+.category-scroll .chip {
+  height: 56rpx;
+  padding: 0 22rpx;
+  font-size: 24rpx;
+  background: #f5f6f8;
+}
+
+.category-scroll .chip.active {
+  background: #1b6ef3;
+  color: #fff;
+}
+
+/* 频道说明：不做彩色横幅，避免挤压信息流 */
+.nt-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 14rpx;
+  padding: 18rpx 24rpx 20rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+}
+
+.nt-tip-icon {
+  flex-shrink: 0;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 8rpx;
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-size: 22rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nt-tip-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: #8a9099;
+}
+
+.nt-count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+  font-size: 22rpx;
+  color: #a5abb3;
+}
+
+.nt-count-sort {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+/* ---------- 公告卡片 ---------- */
+
+.nt-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 20rpx;
+}
+
+.nt-card:first-of-type {
+  margin-top: 24rpx;
+}
+
+.nt-card-hover {
+  background: #fafbfc;
+}
+
+.nt-card-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 14rpx;
+}
+
+.nt-card-head .tag {
+  margin-right: 0;
+}
+
+.nt-region {
+  font-size: 22rpx;
+  color: #8a9099;
+  max-width: 240rpx;
+}
+
+.nt-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #1f2329;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.nt-summary {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: #6b7280;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.nt-pub {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 16rpx;
+  font-size: 22rpx;
+  color: #4e5969;
+}
+
+.nt-pub-name {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 200rpx;
+}
+
+.nt-pub-org {
+  flex: 1;
+  min-width: 0;
+  color: #8a9099;
+}
+
+.nt-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #a5abb3;
+}
+
+.nt-dot {
+  color: #d5d9df;
+}
+
+/* ---------- 状态 ---------- */
+
+.nt-loading {
+  padding: 100rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: #8a9099;
+}
+
+.nt-more {
+  padding: 24rpx 0 8rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #a5abb3;
+}
+
+.footer-holder {
+  height: 150rpx;
+}
+
+.fab {
+  position: fixed;
+  right: 24rpx;
+  bottom: 40rpx;
+  z-index: 30;
+  height: 88rpx;
+  padding: 0 36rpx;
+  border-radius: 44rpx;
+  background: #1b6ef3;
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6rpx 16rpx rgba(27, 110, 243, 0.28);
+}

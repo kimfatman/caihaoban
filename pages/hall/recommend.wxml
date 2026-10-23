@@ -1,0 +1,61 @@
+<view class="page">
+  <view class="rc-tabs">
+    <view
+      class="rc-tab {{sort === item.value ? 'active' : ''}}"
+      wx:for="{{sorts}}"
+      wx:key="value"
+      data-value="{{item.value}}"
+      bindtap="onSortTap"
+    >{{item.label}}</view>
+    <text class="rc-count" wx:if="{{!loading && !needProfile}}">共 {{total}} 个</text>
+  </view>
+
+  <view class="rc-hint" wx:if="{{profile && profile.hasProfile}}">
+    依据你的擅长业务、服务地区与接单状态匹配{{paused ? ' · 当前暂不接单' : ''}}
+  </view>
+
+  <view class="loading-tip" wx:if="{{loading}}">正在匹配适合你的任务…</view>
+
+  <block wx:elif="{{needProfile}}">
+    <empty-state
+      text="还没有你的服务能力档案"
+      tip="填写擅长业务、可服务地区与接单状态后，系统会把合适的任务推荐给你"
+      btnText="去完善服务能力"
+      bind:action="goProfile"
+    />
+  </block>
+
+  <block wx:elif="{{error}}">
+    <view class="rc-error">
+      <text class="rc-error-text">{{error}}</text>
+      <view class="btn btn-sm" bindtap="onRetry">重新加载</view>
+    </view>
+  </block>
+
+  <block wx:elif="{{list.length === 0}}">
+    <empty-state
+      text="{{emptyText}}"
+      tip="可以扩大擅长业务或服务地区，也可以直接浏览任务大厅"
+      btnText="去任务大厅"
+      bind:action="goHall"
+    />
+  </block>
+
+  <block wx:else>
+    <task-card
+      wx:for="{{list}}"
+      wx:key="id"
+      task="{{item}}"
+      reasons="{{item.matchReasons}}"
+      quotable="{{true}}"
+      bind:tasktap="onTaskTap"
+      bind:quote="onQuoteTap"
+    />
+
+    <view class="rc-more" wx:if="{{loadingMore}}">加载中…</view>
+    <view class="rc-more" wx:elif="{{hasMore}}" bindtap="onRetry">加载更多</view>
+    <view class="rc-more" wx:else>已展示全部 {{total}} 个匹配任务</view>
+  </block>
+
+  <view class="footer-holder"></view>
+</view>

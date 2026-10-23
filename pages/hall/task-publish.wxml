@@ -1,0 +1,229 @@
+<view class="page">
+  <view class="notice">
+    发布后可在报价截止前编辑或取消；请勿在说明中填写客户名称、证件号码、银行账号等敏感信息。
+  </view>
+
+  <view class="form-group">
+    <view class="form-item" wx:if="{{orgs.length > 1}}">
+      <view class="form-label required">发布机构</view>
+      <picker mode="selector" range="{{orgs}}" range-key="name" value="{{orgIndex}}" bindchange="onOrgChange">
+        <view class="picker-value">
+          <text>{{orgName}}</text>
+          <view class="arrow"></view>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">任务标题</view>
+      <input
+        class="form-input"
+        value="{{form.title}}"
+        maxlength="40"
+        placeholder="例如：朝阳区连锁餐饮 3 家门店年度审计"
+        placeholder-class="placeholder"
+        data-field="title"
+        bindinput="onFieldInput"
+      />
+      <view class="form-tip">{{form.title.length}}/40</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">服务类型</view>
+      <picker mode="selector" range="{{serviceTypes}}" range-key="label" value="{{serviceIndex}}" bindchange="onServiceChange">
+        <view class="picker-value">
+          <text>{{serviceLabel}}</text>
+          <view class="arrow"></view>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">详细说明</view>
+      <textarea
+        class="form-textarea"
+        value="{{form.description}}"
+        maxlength="1000"
+        placeholder="说明业务背景、现有资料、交付要求与验收口径，不要填写客户敏感信息"
+        placeholder-class="placeholder"
+        data-field="description"
+        bindinput="onFieldInput"
+      />
+      <view class="form-tip">{{form.description.length}}/1000</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">服务区域</view>
+      <view class="row" style="gap:20rpx;">
+        <picker class="flex1" mode="selector" range="{{provinces}}" value="{{provinceIndex}}" bindchange="onProvinceChange">
+          <view class="picker-value {{provinceLabel ? '' : 'empty'}}">
+            <text>{{provinceLabel || '选择省份'}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+        <picker class="flex1" mode="selector" range="{{cities}}" value="{{cityIndex}}" bindchange="onCityChange">
+          <view class="picker-value {{cityLabel ? '' : 'empty'}}">
+            <text>{{cityLabel || '选择城市'}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+      </view>
+      <input
+        class="form-input mt16"
+        value="{{form.address}}"
+        placeholder="详细地址（选填，成交后向承接方开放）"
+        placeholder-class="placeholder"
+        data-field="address"
+        bindinput="onFieldInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="between">
+        <view class="form-label" style="margin-bottom:0;">需现场办理</view>
+        <switch checked="{{form.onsiteRequired}}" color="#1b6ef3" bindchange="onOnsiteChange" />
+      </view>
+      <view class="form-tip">
+        开启后只推荐可线下服务且覆盖该地区的服务者；关闭时需在说明中出现「现场 / 上门 / 盘点」等字样也会被自动识别。
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">期望完成时间</view>
+      <view class="row" style="gap:20rpx;">
+        <picker class="flex1" mode="date" value="{{form.expectedDate}}" start="{{today}}" bindchange="onDateChange" data-field="expectedDate">
+          <view class="picker-value {{form.expectedDate ? '' : 'empty'}}">
+            <text>{{form.expectedDate || '选择日期'}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+        <picker class="flex1" mode="time" value="{{form.expectedTime}}" bindchange="onDateChange" data-field="expectedTime">
+          <view class="picker-value">
+            <text>{{form.expectedTime}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">参考价（元）</view>
+      <input
+        class="form-input"
+        type="digit"
+        value="{{form.referencePrice}}"
+        placeholder="选填，仅作参考，最终以双方报价确认为准"
+        placeholder-class="placeholder"
+        data-field="referencePrice"
+        bindinput="onFieldInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">报价截止时间</view>
+      <view class="row" style="gap:20rpx;">
+        <picker class="flex1" mode="date" value="{{form.quoteDate}}" start="{{today}}" bindchange="onDateChange" data-field="quoteDate">
+          <view class="picker-value {{form.quoteDate ? '' : 'empty'}}">
+            <text>{{form.quoteDate || '选择日期'}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+        <picker class="flex1" mode="time" value="{{form.quoteTime}}" bindchange="onDateChange" data-field="quoteTime">
+          <view class="picker-value">
+            <text>{{form.quoteTime}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+      </view>
+      <view class="form-tip">截止后报价自动失效，任务进入已过期状态。</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">服务要求</view>
+      <view class="row" style="gap:16rpx;">
+        <input
+          class="form-input flex1"
+          value="{{requirementInput}}"
+          placeholder="如：具备会计师事务所执业资质"
+          placeholder-class="placeholder"
+          bindinput="onRequirementInput"
+          bindconfirm="addRequirement"
+        />
+        <view class="btn btn-sm btn-ghost" bindtap="addRequirement">添加</view>
+      </view>
+      <view class="req-list" wx:if="{{form.requirements.length > 0}}">
+        <view class="req-chip" wx:for="{{form.requirements}}" wx:key="*this">
+          <text>{{item}}</text>
+          <text class="req-del" data-index="{{index}}" bindtap="removeRequirement">×</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">必要资质</view>
+      <view class="qual-chips">
+        <view
+          class="qual-chip {{item.active ? 'active' : ''}}"
+          wx:for="{{qualificationOptions}}"
+          wx:key="value"
+          data-value="{{item.value}}"
+          bindtap="onQualificationTap"
+        >{{item.label}}</view>
+      </view>
+      <view class="form-tip">勾选后，未具备对应资质的服务者不会进入推荐接单人名单，请按实际需求选择。</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">必要附件</view>
+      <view class="upload-grid">
+        <view class="upload-item" wx:for="{{form.attachments}}" wx:key="name">
+          <image wx:if="{{item.path}}" src="{{item.path}}" mode="aspectFill" />
+          <text wx:else class="file-text">{{item.name}}</text>
+          <view class="del" data-index="{{index}}" bindtap="removeAttachment">×</view>
+        </view>
+        <view class="upload-add" bindtap="chooseAttachment">
+          <text class="plus">+</text>
+          <text>上传附件</text>
+        </view>
+      </view>
+      <view class="form-tip">建议上传清单、资料模板等非敏感文件。</view>
+    </view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary" bindtap="onPreview">预览并发布</view>
+  </view>
+
+  <view class="modal-mask" wx:if="{{previewVisible}}" bindtap="closePreview">
+    <view class="modal-panel preview-panel" catchtap="noop">
+      <view class="modal-title">发布前预览</view>
+      <view class="preview-title">{{preview.title}}</view>
+      <view class="row" style="gap:12rpx;flex-wrap:wrap;margin-bottom:16rpx;">
+        <text class="tag tag-primary">{{preview.serviceTypeLabel}}</text>
+        <text class="tag tag-plain">{{preview.regionText}}</text>
+        <text class="tag tag-warn">{{preview.quoteDeadlineText}} 截止</text>
+      </view>
+      <view class="kv"><text class="k">参考价</text><text class="v">{{preview.referencePriceText}}</text></view>
+      <view class="kv"><text class="k">期望完成</text><text class="v">{{preview.expectedFinishText}}</text></view>
+      <view class="kv"><text class="k">服务方式</text><text class="v">{{preview.onsiteText}}</text></view>
+      <view class="kv" wx:if="{{preview.qualificationLabels.length > 0}}">
+        <text class="k">必要资质</text>
+        <text class="v">{{preview.qualificationLabels}}</text>
+      </view>
+      <view class="kv" wx:if="{{preview.address}}"><text class="k">详细地址</text><text class="v">{{preview.address}}</text></view>
+      <view class="kv"><text class="k">发布机构</text><text class="v">{{orgName}}</text></view>
+      <view class="line"></view>
+      <text class="preview-desc">{{preview.description}}</text>
+      <view class="req-preview" wx:if="{{preview.requirements.length > 0}}">
+        <text class="muted">服务要求：{{preview.requirements.length}} 项</text>
+      </view>
+      <view class="btn-row mt24">
+        <view class="btn" bindtap="closePreview">返回修改</view>
+        <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+          {{submitting ? '发布中…' : (editing ? '确认保存' : '确认发布')}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

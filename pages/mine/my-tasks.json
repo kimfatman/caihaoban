@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我发布的任务",
+  "usingComponents": {
+    "task-card": "/components/task-card/index",
+    "empty-state": "/components/empty-state/index"
+  }
+}

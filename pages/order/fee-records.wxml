@@ -1,0 +1,82 @@
+<view class="page" wx:if="{{order}}">
+  <view class="card">
+    <text class="title ellipsis">{{order.taskTitle}}</text>
+    <view class="row mt8" style="gap:12rpx;">
+      <text class="tag tag-plain">{{order.no}}</text>
+      <text class="tag tag-plain">{{order.roleText}}</text>
+    </view>
+    <view class="line"></view>
+    <view class="fee-row"><text>初始成交价</text><text>{{order.priceText}}</text></view>
+    <view class="fee-row"><text>额外费用（双方已确认）</text><text>{{order.extraFeeText}}</text></view>
+    <view class="fee-row total"><text>应结总额</text><text class="price">{{order.totalText}}</text></view>
+  </view>
+
+  <view class="notice">
+    费用变更须记录原因与变更前后金额，并经双方确认后生效；收付款由用户申报、对方确认，平台不提供资金支付。
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">费用变更历史</text>
+      <text class="muted">{{order.feeChanges.length}} 条</text>
+    </view>
+    <view class="record-item" wx:for="{{order.feeChanges}}" wx:key="id">
+      <view class="between">
+        <text class="desc">变更 V{{item.version}} · {{item.createdByName}}</text>
+        <status-tag label="{{item.statusLabel}}" tag="{{item.statusTag}}" />
+      </view>
+      <view class="between">
+        <text class="muted">{{item.beforeText}} → {{item.afterText}}</text>
+        <text class="diff">{{item.diffText}}</text>
+      </view>
+      <text class="muted">原因：{{item.reason}}</text>
+      <text class="muted">{{item.createdAtText}}</text>
+      <view class="confirm-line">
+        <text class="confirm-tag {{item.demandConfirmed === true ? 'ok' : item.demandConfirmed === false ? 'no' : ''}}">
+          需求方：{{item.demandConfirmed === true ? '已确认' : item.demandConfirmed === false ? '已拒绝' : '待确认'}}
+        </text>
+        <text class="confirm-tag {{item.supplyConfirmed === true ? 'ok' : item.supplyConfirmed === false ? 'no' : ''}}">
+          承接方：{{item.supplyConfirmed === true ? '已确认' : item.supplyConfirmed === false ? '已拒绝' : '待确认'}}
+        </text>
+      </view>
+      <view class="record-actions" wx:if="{{item.canConfirm && !item.isMine}}">
+        <view class="btn btn-sm" data-id="{{item.id}}" data-agree="0" bindtap="confirmFee">拒绝</view>
+        <view class="btn btn-sm btn-primary" data-id="{{item.id}}" data-agree="1" bindtap="confirmFee">确认</view>
+      </view>
+      <text class="muted" wx:elif="{{item.canConfirm && item.isMine}}">等待对方确认</text>
+    </view>
+    <view class="empty-line" wx:if="{{order.feeChanges.length === 0}}">暂无费用变更</view>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">收付款申报</text>
+      <text class="muted">{{order.payments.length}} 条</text>
+    </view>
+    <view class="record-item" wx:for="{{order.payments}}" wx:key="id">
+      <view class="between">
+        <text class="desc">{{item.typeLabel}} · {{item.declaredByName}}</text>
+        <status-tag label="{{item.statusLabel}}" tag="{{item.statusTag}}" />
+      </view>
+      <view class="between">
+        <text class="price" style="font-size:30rpx;">{{item.amountText}}</text>
+        <text class="muted">{{item.declaredAtText}}</text>
+      </view>
+      <text class="muted">{{item.remark}}</text>
+      <text class="muted">用户申报，平台未核实资金流水</text>
+      <view class="record-actions" wx:if="{{item.canConfirm}}">
+        <view class="btn btn-sm" data-id="{{item.id}}" data-agree="0" bindtap="confirmPayment">否认</view>
+        <view class="btn btn-sm btn-primary" data-id="{{item.id}}" data-agree="1" bindtap="confirmPayment">确认</view>
+      </view>
+    </view>
+    <view class="empty-line" wx:if="{{order.payments.length === 0}}">暂无收付款申报</view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-ghost" wx:if="{{order.permissions.canFeeChange}}" bindtap="goFeeChange">申请费用变更</view>
+    <view class="btn btn-primary" wx:if="{{order.permissions.canDeclare}}" bindtap="goPayment">收付款申报</view>
+  </view>
+</view>
+
+<view class="loading" wx:elif="{{loading}}">加载中…</view>

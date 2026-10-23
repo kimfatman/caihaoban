@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="notice">机构成员共享任务、报价与订单权限，具体可见范围由角色权限控制；成员变更会记录在审计日志中。</view>
+
+  <view class="org-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onOrgTap">
+    <view class="between">
+      <view class="row" style="gap:12rpx;flex:1;min-width:0;">
+        <text class="org-name ellipsis">{{item.name}}</text>
+        <text class="tag tag-plain">{{item.typeLabel}}</text>
+      </view>
+      <text class="tag {{item.statusTag}}">{{item.statusLabel}}</text>
+    </view>
+    <view class="kv mt8"><text class="k">地区</text><text class="v">{{item.region}}</text></view>
+    <view class="kv"><text class="k">我的角色</text><text class="v">{{item.roleLabel}}</text></view>
+    <view class="kv"><text class="k">成员数</text><text class="v">{{item.memberCount}} 人</text></view>
+    <view class="org-foot">
+      <text class="muted">{{item.canManage ? '可管理成员' : '仅查看成员'}}</text>
+      <text class="link">进入管理 ›</text>
+    </view>
+  </view>
+
+  <empty-state wx:if="{{!loading && list.length === 0}}" text="暂无机构" tip="请联系机构负责人将你加入企业或门店" />
+</view>

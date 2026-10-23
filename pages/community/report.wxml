@@ -1,0 +1,43 @@
+<view class="page">
+  <view class="card">
+    <text class="muted">举报对象</text>
+    <text class="title ellipsis mt8" style="font-size:28rpx;display:block;">{{targetTitle || '该内容'}}</text>
+  </view>
+
+  <view class="card">
+    <view class="block-title">举报原因</view>
+    <view
+      class="reason-item {{reason === item ? 'active' : ''}}"
+      wx:for="{{reasons}}"
+      wx:key="*this"
+      data-value="{{item}}"
+      bindtap="onReasonTap"
+    >
+      <text class="reason-text">{{item}}</text>
+      <view class="radio {{reason === item ? 'on' : ''}}"></view>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">补充说明</view>
+    <textarea
+      class="form-textarea"
+      value="{{detail}}"
+      maxlength="300"
+      placeholder="补充具体位置、涉及内容等，便于平台核实"
+      placeholder-class="placeholder"
+      bindinput="onDetailInput"
+    />
+  </view>
+
+  <view class="notice">
+    平台将结合举报记录与内容情况人工审核，处置结果与原因会被留存。恶意举报可能导致账号受限。
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+      {{submitting ? '提交中…' : '提交举报'}}
+    </view>
+  </view>
+</view>

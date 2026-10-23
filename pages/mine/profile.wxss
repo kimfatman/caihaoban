@@ -1,0 +1,62 @@
+.block-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.org-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f2f3f5;
+}
+
+.org-item:last-child {
+  border-bottom: none;
+}
+
+.org-name {
+  display: block;
+  font-size: 27rpx;
+  font-weight: 500;
+  margin-bottom: 4rpx;
+}
+
+.avatar-preview {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 8rpx 0 24rpx;
+}
+
+.avatar-preview-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.avatar-preview-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2329;
+}
+
+.avatar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+/* 微信 button 带默认样式与边框，需重置后才能复用 .btn */
+.pick-btn {
+  margin: 0;
+  padding: 0 24rpx;
+  line-height: 1;
+}
+
+.pick-btn::after {
+  border: none;
+}

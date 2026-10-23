@@ -1,0 +1,68 @@
+<view class="page" wx:if="{{task}}">
+  <view class="card task-bar" bindtap="goTask">
+    <view class="between">
+      <text class="title ellipsis flex1">{{task.title}}</text>
+      <text class="tag {{task.stateTag}}">{{task.stateLabel}}</text>
+    </view>
+    <view class="row mt8">
+      <text class="muted flex1">{{task.regionText}} · 报价截止 {{task.quoteDeadlineText}}</text>
+      <text class="muted">查看任务 ›</text>
+    </view>
+  </view>
+
+  <view class="notice" wx:if="{{!isDemander}}">
+    报价方默认不能查看其他报价金额，此处仅展示本机构提交的报价；共 {{total}} 条。
+  </view>
+  <view class="notice" wx:else>
+    共 {{total}} 条报价。平台不设评分、排名与最低价限制，由需求方自主决定是否接受。
+  </view>
+
+  <view class="quote-card" wx:for="{{quotes}}" wx:key="id">
+    <view class="between">
+      <view class="row" style="gap:12rpx;flex:1;min-width:0;">
+        <user-avatar view="{{item.userAvatar}}" size="{{56}}" tags="{{item.userAvatar.tags}}" />
+        <view class="flex1">
+          <text class="org-name ellipsis">{{item.orgName}}</text>
+          <text class="muted">报价人 {{item.userName}} · V{{item.versionCount}} · {{item.createdAtText}}</text>
+        </view>
+      </view>
+      <text class="amount">{{item.amountText}}</text>
+    </view>
+
+    <view class="quote-meta">
+      <view class="kv"><text class="k">预计完成</text><text class="v">{{item.expectFinishText}}</text></view>
+      <view class="kv"><text class="k">费用包含范围</text><text class="v">{{item.feeInclude || '未填写'}}</text></view>
+      <view class="kv"><text class="k">代垫费用</text><text class="v">{{item.advanceFee || '无'}}</text></view>
+      <view class="kv"><text class="k">状态</text><text class="v">{{item.statusLabel}}</text></view>
+    </view>
+
+    <text class="quote-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+
+    <view class="quote-actions">
+      <view class="btn btn-sm" data-id="{{item.id}}" bindtap="onQuoteTap">查看详情与版本</view>
+      <view
+        wx:if="{{isDemander && !item.isMine}}"
+        class="btn btn-sm"
+        data-id="{{item.id}}"
+        data-user="{{item.userId}}"
+        bindtap="onChatTap"
+      >联系报价方</view>
+      <view
+        wx:if="{{isDemander && item.status === 'pending' && task.state === 'open'}}"
+        class="btn btn-sm btn-primary"
+        data-id="{{item.id}}"
+        bindtap="onAcceptTap"
+      >接受报价</view>
+    </view>
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && quotes.length === 0}}"
+    text="暂无可见报价"
+    tip="{{isDemander ? '还没有承接方提交报价，可稍后再查看' : '本机构尚未对该任务报价'}}"
+  />
+
+  <view class="tip-bottom">
+    接受报价将生成唯一订单；订单取消后任务默认关闭，不会自动重新开放。
+  </view>
+</view>

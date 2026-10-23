@@ -1,0 +1,277 @@
+.hero {
+  background: #fff;
+  padding: 32rpx 24rpx 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.hero-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+.hero-title {
+  flex: 1;
+  font-size: 38rpx;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 28rpx;
+}
+
+.meta-block {
+  flex: 1;
+  background: #f7f8fa;
+  border-radius: 12rpx;
+  padding: 18rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  min-width: 0;
+}
+
+.meta-label {
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+.meta-value {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #1f2329;
+}
+
+.meta-value.price {
+  color: #ff6a00;
+  font-size: 30rpx;
+}
+
+.meta-sub {
+  font-size: 20rpx;
+  color: #f79009;
+}
+
+.hero-notice {
+  margin-top: 20rpx;
+  padding: 16rpx;
+  border-radius: 10rpx;
+  background: #f5f6f8;
+  color: #8a9099;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.block-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.paragraph {
+  display: block;
+  font-size: 27rpx;
+  color: #4e5969;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.req-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+  font-size: 26rpx;
+  color: #4e5969;
+  padding: 8rpx 0;
+  line-height: 1.6;
+}
+
+.dot {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #1b6ef3;
+  margin-top: 14rpx;
+  flex-shrink: 0;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f2f3f5;
+}
+
+.file-item:last-child {
+  border-bottom: none;
+}
+
+.file-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 10rpx;
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.file-name {
+  font-size: 26rpx;
+  color: #1f2329;
+  max-width: 480rpx;
+}
+
+.org-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.org-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  max-width: 380rpx;
+  margin-right: 12rpx;
+}
+
+.cap-row {
+  margin-top: 18rpx;
+}
+
+.quote-block .price {
+  font-size: 34rpx;
+}
+
+.loading-tip {
+  padding: 120rpx 0;
+  text-align: center;
+  color: #8a9099;
+}
+
+/* ---------------- 推荐接单人 ---------------- */
+
+.rec-block {
+  padding: 24rpx;
+}
+
+.rec-block .block-title {
+  margin-bottom: 0;
+}
+
+.rec-badge {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  padding: 0 14rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  background: #eef4ff;
+  color: #1b6ef3;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+}
+
+.rec-relaxed {
+  margin-top: 16rpx;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  background: #fff8ed;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.rec-relaxed-text {
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: #b25f00;
+}
+
+.rec-relaxed-action {
+  font-size: 22rpx;
+  color: #1b6ef3;
+}
+
+/* 列表用负外边距贴边，让推荐卡的分隔线贯通 */
+.rec-list {
+  margin: 16rpx -24rpx 0;
+  border-top: 1rpx solid #f0f1f3;
+}
+
+.rec-list .pc:last-child {
+  border-bottom: none;
+  padding-bottom: 4rpx;
+}
+
+.rec-loading {
+  margin: 24rpx -24rpx 0;
+  padding: 48rpx 0;
+  border-top: 1rpx solid #f0f1f3;
+  text-align: center;
+  font-size: 24rpx;
+  color: #8a9099;
+}
+
+.rec-error {
+  margin-top: 20rpx;
+  padding: 32rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.rec-more {
+  margin-top: 8rpx;
+  padding: 20rpx 0;
+  border-radius: 12rpx;
+  background: #f7f8fa;
+  text-align: center;
+  font-size: 24rpx;
+  color: #1b6ef3;
+}
+
+.rec-empty {
+  margin-top: 20rpx;
+  padding: 40rpx 24rpx;
+  border-radius: 12rpx;
+  background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.rec-empty-text {
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: #6b7280;
+  text-align: center;
+}
+
+.rec-empty-actions {
+  display: flex;
+  gap: 20rpx;
+}

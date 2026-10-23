@@ -1,0 +1,183 @@
+<view class="page" wx:if="{{!loading}}">
+  <view class="sp-head">
+    <view class="sp-head-row">
+      <text class="sp-head-title">服务能力完整度</text>
+      <text class="sp-head-percent">{{completeness}}%</text>
+    </view>
+    <view class="sp-bar">
+      <view class="sp-bar-fill" style="width:{{completeness}}%;"></view>
+    </view>
+    <text class="sp-head-tip">
+      {{completeness >= 100 ? '资料已完整，可进入任务推荐名单' : '资料越完整被推荐的概率越高；未填写不影响发布任务、报价与聊天'}}
+    </text>
+    <view class="sp-head-link" bindtap="goRecommend">查看为我推荐的任务 ›</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">擅长业务</view>
+    <view class="sp-chips">
+      <view
+        class="sp-chip {{item.active ? 'active' : ''}}"
+        wx:for="{{businessChips}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onBusinessTap"
+      >{{item.label}}</view>
+    </view>
+    <view class="form-tip">可多选，建议只勾选真正能承接的业务</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">可服务地区</view>
+    <view class="sp-chips" wx:if="{{areaTexts.length > 0}}">
+      <view class="sp-chip active" wx:for="{{areaTexts}}" wx:key="*this">
+        <text>{{item}}</text>
+        <text class="sp-chip-del" data-index="{{index}}" catchtap="removeArea">×</text>
+      </view>
+    </view>
+    <view class="sp-add" bindtap="openRegion">+ 添加地区</view>
+    <view class="form-tip">支持多选；只选省份不选城市即为「全省 / 全市服务」，最多 20 个</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">服务方式</view>
+    <view class="sp-chips">
+      <view
+        class="sp-chip {{item.active ? 'active' : ''}}"
+        wx:for="{{modeOptions}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onModeTap"
+      >{{item.label}}</view>
+    </view>
+    <view class="form-tip">需现场办理的任务只推荐可线下服务、且覆盖该地区的服务者</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">接单状态</view>
+    <view class="sp-chips">
+      <view
+        class="sp-chip {{item.active ? 'active' : ''}}"
+        wx:for="{{statusOptions}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onStatusTap"
+      >{{item.label}}</view>
+    </view>
+    <view class="form-tip">选择「暂不接单」后不会再出现在推荐名单中</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">月度接单能力</view>
+    <view class="sp-chips">
+      <view
+        class="sp-chip {{item.active ? 'active' : ''}}"
+        wx:for="{{capacityOptions}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onCapacityTap"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">报价方式</view>
+    <view class="sp-chips">
+      <view
+        class="sp-chip {{item.active ? 'active' : ''}}"
+        wx:for="{{quoteOptions}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onQuoteTap"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">相关资质</view>
+    <view class="sp-chips">
+      <view
+        class="sp-chip {{item.active ? 'active' : ''}}"
+        wx:for="{{qualificationChips}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onQualificationTap"
+      >{{item.label}}</view>
+    </view>
+    <view class="form-tip">请如实填写。任务要求了必要资质时，未勾选对应资质的服务者不会进入推荐名单</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">服务年限</view>
+    <input
+      class="form-input"
+      type="number"
+      value="{{years}}"
+      maxlength="2"
+      placeholder="选填，填写从事财税服务的年数"
+      placeholder-class="placeholder"
+      bindinput="onYearsInput"
+    />
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">服务介绍</view>
+    <textarea
+      class="form-textarea"
+      value="{{intro}}"
+      maxlength="300"
+      placeholder="选填，简单说明擅长的场景、可提供的交付物与服务承诺"
+      placeholder-class="placeholder"
+      bindinput="onIntroInput"
+    />
+    <view class="form-tip">{{intro.length}}/300 · 请勿填写客户名称、证件号码等敏感信息</view>
+  </view>
+
+  <view class="form-tip" style="padding:0 24rpx;">最近更新：{{updatedAtText}}</view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{saving ? 'btn-disabled' : ''}}" bindtap="onSave">
+      {{saving ? '保存中…' : '保存服务能力'}}
+    </view>
+  </view>
+
+  <!-- 地区选择：省 / 市两级，不选城市即全省服务 -->
+  <view class="region-mask {{regionVisible ? 'show' : ''}}" bindtap="closeRegion"></view>
+  <view class="region-panel {{regionVisible ? 'show' : ''}}" catchtap="noop">
+    <view class="region-head">
+      <text class="region-title">添加可服务地区</text>
+      <text class="region-clear" catchtap="closeRegion">关闭</text>
+    </view>
+
+    <view class="region-form">
+      <view class="region-row">
+        <text class="region-label">省份</text>
+        <picker class="flex1" mode="selector" range="{{provinces}}" value="{{provinceIndex}}" bindchange="onProvinceChange">
+          <view class="picker-value">
+            <text>{{provinceName}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+      </view>
+      <view class="region-row">
+        <text class="region-label">范围</text>
+        <picker class="flex1" mode="selector" range="{{cityOptions}}" value="{{cityIndex}}" bindchange="onCityChange">
+          <view class="picker-value">
+            <text>{{cityName}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="region-actions">
+      <view class="btn" catchtap="closeRegion">取消</view>
+      <view class="btn btn-primary" catchtap="addArea">添加该地区</view>
+    </view>
+  </view>
+</view>
+
+<view class="page" wx:elif="{{loading}}">
+  <view class="loading-tip">加载中…</view>
+</view>

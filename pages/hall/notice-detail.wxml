@@ -1,0 +1,126 @@
+<view class="page" wx:if="{{notice}}">
+  <view class="nd-head">
+    <view class="nd-badges">
+      <text class="tag {{notice.badgeTag}}" wx:if="{{notice.badgeText}}">{{notice.badgeText}}</text>
+      <text class="tag tag-primary">{{notice.categoryLabel}}</text>
+      <text class="tag tag-plain">{{notice.regionText}}</text>
+    </view>
+    <view class="nd-title">{{notice.title}}</view>
+    <view class="nd-meta">
+      <text>{{notice.publishedAtText}}</text>
+      <text class="nd-dot">·</text>
+      <text>{{notice.viewCountText}}</text>
+    </view>
+  </view>
+
+  <!-- 非公开状态：只有发布者本人能看到，公开列表不会出现 -->
+  <view class="nd-status nd-status-{{notice.status}}" wx:if="{{notice.status !== 'approved'}}">
+    <text class="nd-status-title">{{notice.statusLabel}}</text>
+    <text class="nd-status-text" wx:if="{{notice.status === 'pending'}}">公告已提交，审核通过后才会在公告牌中公开展示。</text>
+    <text class="nd-status-text" wx:elif="{{notice.status === 'rejected'}}">
+      审核未通过：{{notice.rejectReason || '内容不符合公告规范'}}。可修改后重新提交。
+    </text>
+    <text class="nd-status-text" wx:elif="{{notice.status === 'expired'}}">展示有效期已结束，公告不再公开展示。</text>
+    <text class="nd-status-text" wx:else>公告已下架，不再公开展示。</text>
+  </view>
+
+  <view class="card">
+    <view class="nd-pub">
+      <user-avatar view="{{notice.publisherAvatar}}" size="{{72}}" show-tags="{{false}}" />
+      <view class="flex1">
+        <view class="row" style="gap:12rpx;">
+          <text class="nd-pub-name ellipsis">{{notice.publisherName}}</text>
+          <text class="tag tag-success" wx:if="{{notice.publisherVerified}}">已实名</text>
+        </view>
+        <text class="muted ellipsis">{{notice.publisherOrgName}}</text>
+      </view>
+    </view>
+
+    <view class="line"></view>
+    <view class="kv"><text class="k">发布时间</text><text class="v">{{notice.publishedAtText}}</text></view>
+    <view class="kv"><text class="k">展示有效期</text><text class="v">{{notice.periodText}}</text></view>
+    <view class="kv"><text class="k">推广状态</text><text class="v">{{notice.promotionText}}</text></view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">公告正文</view>
+    <text class="nd-content">{{notice.content}}</text>
+  </view>
+
+  <view class="card" wx:if="{{notice.isOwner}}">
+    <view class="block-title">公告动态</view>
+    <view class="timeline-item active" wx:for="{{notice.auditTrail}}" wx:key="atText">
+      <view class="between">
+        <text class="desc">{{item.action}}</text>
+        <text class="muted">{{item.atText}}</text>
+      </view>
+      <text class="muted" wx:if="{{item.remark}}">{{item.remark}}</text>
+      <text class="muted">操作人：{{item.by}}</text>
+    </view>
+  </view>
+
+  <!-- 联系方式：默认打码，需主动查看；私信复用现有会话能力 -->
+  <view class="card" wx:if="{{!notice.isOwner}}">
+    <view class="block-title">联系方式</view>
+    <view class="nd-contact">
+      <text class="nd-contact-value" wx:if="{{!notice.contact}}">发布者未填写联系方式，可通过私信沟通</text>
+      <text class="nd-contact-value" wx:elif="{{contactShown}}">{{notice.contact}}</text>
+      <text class="nd-contact-value muted" wx:else>{{notice.contactMasked}}</text>
+      <text class="nd-contact-action" wx:if="{{notice.contact}}" bindtap="onToggleContact">
+        {{contactShown ? '隐藏' : '查看'}}
+      </text>
+    </view>
+    <view class="form-tip">联系方式由发布者自愿填写，请自行核实对方资质与信息真实性，谨防预付款风险。</view>
+  </view>
+
+  <!-- 付费置顶：仅发布者可见，全部为演示订单 -->
+  <view class="card" wx:if="{{notice.isOwner}}">
+    <view class="block-title">推广套餐</view>
+    <view class="nd-demo">{{demoTip}}</view>
+
+    <block wx:if="{{notice.hasPaidOrder}}">
+      <view class="nd-plan-current">
+        <text class="tag {{notice.badgeTag}}">{{notice.badgeText}}</text>
+        <text class="nd-plan-name">{{notice.planLabel}}</text>
+        <text class="nd-plan-price">{{notice.planPriceText}}</text>
+      </view>
+      <view class="form-tip">已生成演示订单，展示期内享受对应排序优先级；公告审核状态与展示资格仍由审核结果决定。</view>
+    </block>
+
+    <block wx:elif="{{notice.status === 'approved'}}">
+      <view class="nd-plans">
+        <view
+          class="nd-plan"
+          wx:for="{{packages}}"
+          wx:key="value"
+          data-plan="{{item.value}}"
+          bindtap="onBuy"
+          hover-class="nd-plan-hover"
+        >
+          <view class="nd-plan-name">{{item.label}}</view>
+          <view class="nd-plan-price">{{item.priceText}}</view>
+          <view class="nd-plan-days">{{item.daysText}}</view>
+          <view class="nd-plan-desc">{{item.description}}</view>
+        </view>
+      </view>
+      <view class="form-tip">{{buying ? '生成演示订单中…' : '点击套餐仅模拟下单，不发起微信支付、不产生真实收款。'}}</view>
+    </block>
+
+    <view class="form-tip" wx:else>公告审核通过后可购买推广套餐。</view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar" wx:if="{{!notice.isOwner}}">
+    <view class="btn btn-primary {{notice.canContact ? '' : 'btn-disabled'}}" bindtap="onContact">
+      {{notice.canContact ? '私信联系发布者' : '该公告已结束展示'}}
+    </view>
+  </view>
+</view>
+
+<view class="page" wx:elif="{{loading}}">
+  <view class="nd-loading">加载中…</view>
+</view>
+
+<view class="page" wx:else>
+  <view class="nd-loading">{{error || '公告不存在或已下架'}}</view>
+</view>

@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "status-tag": "/components/status-tag/index",
+    "user-avatar": "/components/user-avatar/index"
+  }
+}

@@ -1,0 +1,55 @@
+<view class="page" wx:if="{{order}}">
+  <view class="card task-summary">
+    <text class="title ellipsis">{{order.taskTitle}}</text>
+    <view class="row mt8" style="gap:12rpx;">
+      <text class="tag tag-plain">{{order.no}}</text>
+      <text class="tag {{order.statusTag}}">{{order.statusLabel}}</text>
+    </view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{type === 'progress' ? 'active' : ''}}" data-type="progress" bindtap="switchType">更新进度</view>
+    <view class="tab {{type === 'evidence' ? 'active' : ''}}" data-type="evidence" bindtap="switchType">提交履约凭证</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">{{type === 'progress' ? '进度说明' : '凭证说明'}}</view>
+    <textarea
+      class="form-textarea"
+      value="{{content}}"
+      maxlength="500"
+      placeholder="{{type === 'progress' ? '说明当前进展、遇到的问题及下一步安排' : '说明本次交付的成果、文件清单及验收要点'}}"
+      placeholder-class="placeholder"
+      bindinput="onContentInput"
+    />
+    <view class="form-tip">{{content.length}}/500</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label {{type === 'evidence' ? 'required' : ''}}">附件 / 凭证</view>
+    <view class="upload-grid">
+      <view class="upload-item" wx:for="{{files}}" wx:key="path">
+        <image src="{{item.path}}" mode="aspectFill" />
+        <view class="del" data-index="{{index}}" bindtap="removeFile">×</view>
+      </view>
+      <view class="upload-add" bindtap="chooseFiles">
+        <text class="plus">+</text>
+        <text>上传图片</text>
+      </view>
+    </view>
+    <view class="form-tip" wx:if="{{type === 'evidence'}}">
+      提交凭证后订单进入待验收状态，需求方可验收通过或退回补充。
+    </view>
+  </view>
+
+  <view class="notice">
+    请勿上传客户身份证、银行账号等敏感资料；确需提供的材料请先脱敏处理。
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+      {{submitting ? '提交中…' : (type === 'progress' ? '保存进度' : '提交并申请验收')}}
+    </view>
+  </view>
+</view>

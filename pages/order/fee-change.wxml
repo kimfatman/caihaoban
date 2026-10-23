@@ -1,0 +1,46 @@
+<view class="page" wx:if="{{order}}">
+  <view class="card">
+    <text class="title ellipsis">{{order.taskTitle}}</text>
+    <view class="line"></view>
+    <view class="kv"><text class="k">当前应结总额</text><text class="v price">{{order.totalText}}</text></view>
+    <view class="kv"><text class="k">初始成交价</text><text class="v">{{order.priceText}}</text></view>
+    <view class="kv"><text class="k">已确认额外费用</text><text class="v">{{order.extraFeeText}}</text></view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">变更后总额（元）</view>
+    <input
+      class="form-input amount-input"
+      type="digit"
+      value="{{afterAmount}}"
+      placeholder="请输入变更后的应结总额"
+      placeholder-class="placeholder"
+      bindinput="onAmountInput"
+    />
+    <view class="form-tip">按变更后总额填写，系统将自动计算与当前金额的差额。</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">变更原因</view>
+    <textarea
+      class="form-textarea"
+      value="{{reason}}"
+      maxlength="300"
+      placeholder="说明新增工作内容、费用依据及与原报价范围的差异"
+      placeholder-class="placeholder"
+      bindinput="onReasonInput"
+    />
+    <view class="form-tip">{{reason.length}}/300</view>
+  </view>
+
+  <view class="notice">
+    费用变更需双方确认后生效；任一方拒绝则变更不生效，原费用继续有效。若无法达成一致可申请争议处理。
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+      {{submitting ? '提交中…' : '提交变更申请'}}
+    </view>
+  </view>
+</view>

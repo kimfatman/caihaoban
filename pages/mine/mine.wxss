@@ -1,0 +1,86 @@
+.profile-head {
+  background: #fff;
+  padding: 32rpx 24rpx 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.name {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.org-row {
+  display: flex;
+  align-items: center;
+  margin-top: 24rpx;
+  padding: 20rpx;
+  border-radius: 14rpx;
+  background: #f7f8fa;
+}
+
+.org-name {
+  display: block;
+  font-size: 27rpx;
+  font-weight: 500;
+}
+
+.org-role {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+.stats {
+  display: flex;
+  margin-top: 24rpx;
+  padding: 8rpx 0 16rpx;
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.stat-value {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1f2329;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+.group-title {
+  padding: 24rpx 24rpx 8rpx;
+  font-size: 24rpx;
+  color: #8a9099;
+}
+
+.card-tight .list-item {
+  font-size: 28rpx;
+}
+
+.logout {
+  margin: 32rpx 24rpx 0;
+  height: 88rpx;
+  border-radius: 12rpx;
+  background: #fff;
+  color: #e54545;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.version {
+  padding: 28rpx 0 40rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #b7bcc4;
+}

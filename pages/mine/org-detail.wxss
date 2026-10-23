@@ -1,0 +1,57 @@
+.block-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.permission-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.permission {
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-size: 22rpx;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f2f3f5;
+}
+
+.member-item:last-child {
+  border-bottom: none;
+}
+
+.member-name {
+  font-size: 27rpx;
+  font-weight: 500;
+}
+
+.member-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6rpx;
+  flex-shrink: 0;
+}
+
+.link {
+  font-size: 23rpx;
+  color: #1b6ef3;
+}
+
+.link.danger {
+  color: #e54545;
+}
+
+.form-item {
+  border-bottom: none;
+}

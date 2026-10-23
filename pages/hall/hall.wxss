@@ -1,0 +1,336 @@
+.hall {
+  padding-bottom: 40rpx;
+}
+
+.hall-filter {
+  background: #fff;
+  padding: 16rpx 24rpx 12rpx;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.search-bar {
+  border: 1rpx solid #ebedf0;
+  background: #f7f8fa;
+}
+
+/* 紧凑搜索：压低高度与圆角，把纵向空间让给任务列表 */
+.search-bar-compact {
+  height: 64rpx;
+  padding: 0 20rpx;
+  border-radius: 32rpx;
+}
+
+.search-bar-compact input {
+  font-size: 24rpx;
+}
+
+.search-action {
+  font-size: 26rpx;
+  color: #1b6ef3;
+  padding-left: 16rpx;
+  border-left: 1rpx solid #e3e6eb;
+}
+
+/* ---------------- 地区 / 业务类型同一行 ---------------- */
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 14rpx;
+}
+
+.filter-cell {
+  flex: 1;
+  min-width: 0;
+}
+
+.filter-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rpx 0;
+  font-size: 26rpx;
+  color: #4e5969;
+}
+
+.filter-cell-inner .ellipsis {
+  max-width: 190rpx;
+}
+
+.filter-cell-inner.active {
+  color: #1b6ef3;
+  font-weight: 500;
+}
+
+.filter-reset {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #8a9099;
+}
+
+/* ---------------- 地区两级选择器 ---------------- */
+
+.region-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 60;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.region-mask.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.region-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 61;
+  max-height: 76vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 28rpx 28rpx 0 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  transform: translateY(101%);
+  transition: transform 0.25s ease;
+}
+
+.region-panel.show {
+  transform: translateY(0);
+}
+
+.region-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx 16rpx;
+}
+
+.region-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2329;
+}
+
+.region-clear {
+  font-size: 25rpx;
+  color: #1b6ef3;
+}
+
+.region-hot-wrap {
+  padding: 4rpx 32rpx 16rpx;
+  border-bottom: 1rpx solid #f2f3f5;
+}
+
+.region-hot-label {
+  display: block;
+  font-size: 22rpx;
+  color: #8a9099;
+  margin-bottom: 12rpx;
+}
+
+.region-hot-list {
+  display: flex;
+  gap: 14rpx;
+  white-space: nowrap;
+}
+
+.rh-item {
+  display: inline-block;
+  height: 56rpx;
+  padding: 0 22rpx;
+  border-radius: 28rpx;
+  background: #f5f6f8;
+  color: #4e5969;
+  font-size: 24rpx;
+  line-height: 56rpx;
+}
+
+.rh-item.active {
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-weight: 500;
+}
+
+.region-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.region-province {
+  width: 210rpx;
+  flex-shrink: 0;
+  background: #f7f8fa;
+  max-height: 52vh;
+}
+
+.rp-item {
+  height: 88rpx;
+  padding: 0 24rpx;
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #4e5969;
+  position: relative;
+}
+
+.rp-item.active {
+  background: #fff;
+  color: #1b6ef3;
+  font-weight: 600;
+}
+
+.rp-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 28rpx;
+  width: 6rpx;
+  height: 32rpx;
+  border-radius: 0 3rpx 3rpx 0;
+  background: #1b6ef3;
+}
+
+.region-city {
+  flex: 1;
+  min-width: 0;
+  max-height: 52vh;
+}
+
+.rc-item {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 32rpx;
+  font-size: 27rpx;
+  color: #1f2329;
+}
+
+.rc-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.rc-item.active {
+  color: #1b6ef3;
+  font-weight: 500;
+}
+
+.rc-check {
+  flex-shrink: 0;
+  margin-left: 12rpx;
+  font-size: 26rpx;
+}
+
+.status-scroll {
+  background: #fff;
+  white-space: nowrap;
+  border-top: 1rpx solid #f2f3f5;
+}
+
+.status-scroll .chips {
+  padding: 16rpx 24rpx 20rpx;
+}
+
+.chip {
+  height: 56rpx;
+  padding: 0 22rpx;
+  font-size: 24rpx;
+}
+
+/* 公告牌入口：紧凑单行 Banner，一行承载名称与内容范围 */
+.notice-banner {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 18rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+}
+
+.notice-banner-hover {
+  background: #fafbfc;
+}
+
+.notice-banner-icon {
+  flex-shrink: 0;
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 8rpx;
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-size: 20rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notice-banner-title {
+  flex-shrink: 0;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1f2329;
+}
+
+.notice-banner-sub {
+  flex: 1;
+  min-width: 0;
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+/* 列表计数与卡片同底色，靠分隔线区分，避免灰色色块打断信息流 */
+.hall-summary {
+  padding: 18rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+}
+
+.hall-summary-text {
+  font-size: 22rpx;
+  color: #a5abb3;
+}
+
+.loading {
+  padding: 80rpx 0;
+  text-align: center;
+  color: #8a9099;
+  font-size: 26rpx;
+}
+
+/* 任务大厅是 tabBar 页面，页面视口已在 tabBar 之上，
+   因此悬浮按钮只需预留自身高度（88rpx + 40rpx 间距），不再叠加安全区 inset */
+.footer-holder {
+  height: 150rpx;
+}
+
+.fab {
+  position: fixed;
+  right: 24rpx;
+  bottom: 40rpx;
+  z-index: 30;
+  height: 88rpx;
+  padding: 0 36rpx;
+  border-radius: 44rpx;
+  background: #1b6ef3;
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6rpx 16rpx rgba(27, 110, 243, 0.28);
+}

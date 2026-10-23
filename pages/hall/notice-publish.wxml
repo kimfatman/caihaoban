@@ -1,0 +1,88 @@
+<view class="page">
+  <view class="notice">
+    公告提交后进入待审核状态，审核通过才会在公告牌中公开展示。请勿填写客户名称、证件号码、银行账号等敏感信息。
+  </view>
+
+  <view class="form-group">
+    <view class="form-item">
+      <view class="form-label required">公告标题</view>
+      <input
+        class="form-input"
+        value="{{title}}"
+        maxlength="40"
+        placeholder="例如：求北京朝阳区长期代理记账合作"
+        placeholder-class="placeholder"
+        bindinput="onTitleInput"
+      />
+      <view class="form-tip">{{title.length}}/40 · 至少 6 个字</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">公告分类</view>
+      <view class="np-chips">
+        <view
+          class="np-chip {{category === item.value ? 'active' : ''}}"
+          wx:for="{{categories}}"
+          wx:key="value"
+          data-value="{{item.value}}"
+          bindtap="onCategoryTap"
+        >{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">公告正文</view>
+      <textarea
+        class="form-textarea"
+        value="{{content}}"
+        maxlength="1000"
+        placeholder="说明合作内容、服务范围、结算方式与期望的合作方式，信息越具体越容易被同行联系"
+        placeholder-class="placeholder"
+        bindinput="onContentInput"
+      />
+      <view class="form-tip">{{content.length}}/1000 · 至少 20 个字</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">合作地区</view>
+      <picker mode="selector" range="{{regions}}" value="{{regionIndex}}" bindchange="onRegionChange">
+        <view class="picker-value">
+          <text>{{regionLabel}}</text>
+          <view class="arrow"></view>
+        </view>
+      </picker>
+      <view class="form-tip">选填。不限地区会出现在任何地区的筛选结果中。</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">联系方式</view>
+      <input
+        class="form-input"
+        value="{{contact}}"
+        maxlength="60"
+        placeholder="选填，例如：微信 xxx / 手机号 / 邮箱"
+        placeholder-class="placeholder"
+        bindinput="onContactInput"
+      />
+      <view class="form-tip">
+        选填。填写后会在详情页以打码形式展示，需对方主动点击才显示完整内容；不填写时对方可通过私信联系你。
+      </view>
+    </view>
+  </view>
+
+  <view class="np-package">
+    <view class="np-package-title">发布套餐</view>
+    <view class="np-package-row">
+      <text>{{freeText}}</text>
+      <text class="np-free">默认</text>
+    </view>
+    <view class="np-demo">{{demoTip}}：{{paidTip}}，可在发布后于公告详情页选择。</view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+      {{submitting ? '提交中…' : '提交审核'}}
+    </view>
+  </view>
+</view>

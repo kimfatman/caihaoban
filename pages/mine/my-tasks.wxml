@@ -1,0 +1,25 @@
+<view class="page">
+  <view class="chips" style="flex-wrap:wrap;">
+    <view
+      class="chip {{status === item.value ? 'active' : ''}}"
+      wx:for="{{statusList}}"
+      wx:key="value"
+      data-value="{{item.value}}"
+      bindtap="onStatusTap"
+    >{{item.label}}</view>
+  </view>
+
+  <block wx:if="{{list.length > 0}}">
+    <task-card wx:for="{{list}}" wx:key="id" task="{{item}}" bind:tasktap="onTaskTap" />
+  </block>
+
+  <empty-state
+    wx:elif="{{!loading}}"
+    text="还没有发布过任务"
+    tip="发布协作任务，等待同行报价并自主确认成交"
+    btnText="发布任务"
+    bind:action="goPublish"
+  />
+
+  <view class="loading" wx:if="{{loading}}">加载中…</view>
+</view>

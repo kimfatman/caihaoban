@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "企业、门店及成员",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/index"
+  }
+}

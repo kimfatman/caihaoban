@@ -1,0 +1,108 @@
+<view class="page">
+  <!-- 为我推荐：紧凑列表项，点击进入现有推荐任务列表（/pages/hall/recommend） -->
+  <view class="recommend-row" bindtap="goRecommend" hover-class="recommend-row-hover">
+    <text class="recommend-icon">荐</text>
+    <view class="recommend-main">
+      <text class="recommend-title">为我推荐</text>
+      <text class="recommend-sub ellipsis">{{recommendHint}}</text>
+    </view>
+    <view class="arrow"></view>
+  </view>
+
+  <view class="msg-tabs">
+    <view class="msg-tab {{tab === 'notice' ? 'active' : ''}}" data-value="notice" bindtap="onTabTap">
+      通知<text class="tab-badge" wx:if="{{unread.notice > 0}}">{{unread.notice > 99 ? '99+' : unread.notice}}</text>
+    </view>
+    <view class="msg-tab {{tab === 'chat' ? 'active' : ''}}" data-value="chat" bindtap="onTabTap">
+      私聊<text class="tab-badge" wx:if="{{unread.chat > 0}}">{{unread.chat > 99 ? '99+' : unread.chat}}</text>
+    </view>
+  </view>
+
+  <block wx:if="{{tab === 'notice'}}">
+    <view class="msg-header">
+      <scroll-view class="type-scroll" scroll-x>
+        <view class="chips" style="padding:16rpx 24rpx;">
+          <view
+            class="chip {{type === item.value ? 'active' : ''}}"
+            wx:for="{{types}}"
+            wx:key="value"
+            data-value="{{item.value}}"
+            bindtap="onTypeTap"
+          >{{item.label}}</view>
+        </view>
+      </scroll-view>
+      <view class="msg-toolbar">
+        <text class="muted">未读 {{unread.notice}} 条</text>
+        <text class="link" bindtap="markAllRead">全部已读</text>
+      </view>
+    </view>
+
+    <view class="msg-list" wx:if="{{list.length > 0}}">
+      <view
+        class="msg-item"
+        wx:for="{{list}}"
+        wx:key="id"
+        data-index="{{index}}"
+        bindtap="onMessageTap"
+      >
+        <view class="msg-icon {{item.type}}">{{item.type === 'quote' ? '报' : item.type === 'order' ? '单' : item.type === 'fee' ? '费' : item.type === 'community' ? '社' : '系'}}</view>
+        <view class="flex1 msg-body">
+          <view class="between">
+            <view class="row" style="gap:12rpx;">
+              <text class="msg-title">{{item.title}}</text>
+              <view class="dot" wx:if="{{!item.read}}"></view>
+            </view>
+            <text class="muted">{{item.createdAtText}}</text>
+          </view>
+          <text class="msg-content ellipsis-2">{{item.content}}</text>
+          <text class="msg-type">{{item.typeLabel}}</text>
+        </view>
+      </view>
+    </view>
+
+    <empty-state wx:elif="{{!loading}}" text="暂无消息" tip="报价、订单、费用与社区互动提醒会出现在这里" />
+
+    <view class="notice" style="margin-bottom:24rpx;">
+      当前优先使用站内消息；订阅消息等能力以微信平台审核及实际配置为准。
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="msg-header">
+      <view class="msg-toolbar" style="padding-top:20rpx;">
+        <text class="muted">私聊未读 {{unread.chat}} 条</text>
+        <text class="link" bindtap="markAllChatRead">全部已读</text>
+      </view>
+    </view>
+
+    <view class="msg-list" wx:if="{{chats.length > 0}}">
+      <view class="msg-item" wx:for="{{chats}}" wx:key="id" data-id="{{item.id}}" bindtap="onChatTap">
+        <view class="avatar-wrap">
+          <user-avatar view="{{item.peerAvatar}}" size="{{80}}" tags="{{item.peerAvatar.tags}}" />
+          <view class="chat-badge" wx:if="{{item.unread > 0}}">{{item.unread > 99 ? '99+' : item.unread}}</view>
+        </view>
+        <view class="flex1 msg-body">
+          <view class="between">
+            <view class="row" style="gap:12rpx;min-width:0;">
+              <text class="msg-title">{{item.peerName}}</text>
+              <text class="muted ellipsis" wx:if="{{item.peerOrgName}}">{{item.peerOrgName}}</text>
+            </view>
+            <text class="muted">{{item.lastAtText}}</text>
+          </view>
+          <text class="msg-content ellipsis">{{item.lastContent}}</text>
+          <text class="msg-type" wx:if="{{item.bizLabel}}">{{item.bizLabel}} · {{item.subject}}</text>
+        </view>
+      </view>
+    </view>
+
+    <empty-state
+      wx:elif="{{!loading}}"
+      text="暂无私聊会话"
+      tip="在任务、报价或订单详情中点击「私信 / 联系对方」即可开启会话"
+    />
+
+    <view class="notice" style="margin-bottom:24rpx;">
+      私聊仅用于业务沟通，请勿发送客户证件、财务资料等敏感信息，聊天记录平台可追溯。
+    </view>
+  </block>
+</view>

@@ -1,0 +1,90 @@
+<view class="page">
+  <view class="notice">
+    发布前请脱敏客户名称、证件号码、财务资料等信息。违规内容将被处理，并记录举报与处置结果。
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">话题分类</view>
+    <view class="category-list">
+      <text
+        class="chip {{category === item.value ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onCategoryTap"
+      >{{item.label}}</text>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">标题</view>
+    <input
+      class="form-input"
+      value="{{title}}"
+      maxlength="40"
+      placeholder="用一句话说明话题，如：海淀区注销清税实操时间线"
+      placeholder-class="placeholder"
+      bindinput="onTitleInput"
+    />
+    <view class="form-tip">{{title.length}}/40</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">地区</view>
+    <picker mode="selector" range="{{regions}}" value="{{regionIndex}}" bindchange="onRegionChange">
+      <view class="picker-value {{region ? '' : 'empty'}}">
+        <text>{{region || '不选择地区'}}</text>
+        <view class="arrow"></view>
+      </view>
+    </picker>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">正文</view>
+    <textarea
+      class="form-textarea"
+      value="{{content}}"
+      maxlength="2000"
+      placeholder="描述业务场景、实操过程、遇到的问题，便于同行给出有价值的建议"
+      placeholder-class="placeholder"
+      bindinput="onContentInput"
+    />
+    <view class="form-tip">{{content.length}}/2000</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">图片</view>
+    <view class="upload-grid">
+      <view class="upload-item" wx:for="{{images}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" />
+        <view class="del" data-index="{{index}}" bindtap="removeImage">×</view>
+      </view>
+      <view class="upload-add" bindtap="addImages">
+        <text class="plus">+</text>
+        <text>添加图片</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">必要附件</view>
+    <view class="upload-grid">
+      <view class="upload-item" wx:for="{{attachments}}" wx:key="name">
+        <text class="file-text">{{item.name}}</text>
+        <view class="del" data-index="{{index}}" bindtap="removeAttachment">×</view>
+      </view>
+      <view class="upload-add" bindtap="addAttachment">
+        <text class="plus">+</text>
+        <text>添加附件</text>
+      </view>
+    </view>
+    <view class="form-tip">附件仅用于同行参考，请先去除客户敏感信息。</view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+      {{submitting ? '发布中…' : '发布话题'}}
+    </view>
+  </view>
+</view>

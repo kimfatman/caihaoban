@@ -1,0 +1,190 @@
+/* 接单人推荐卡：与任务卡同构，A 身份行 / 匹配信息 / 标签 / 底部操作 */
+.pc {
+  padding: 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+}
+
+.pc-hover {
+  background: #fafbfc;
+}
+
+.pc-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+}
+
+.pc-ident {
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-line1 {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  min-width: 0;
+}
+
+.pc-name {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 40rpx;
+  color: #1f2329;
+}
+
+.pc-verified {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5rpx;
+  font-size: 22rpx;
+  color: #1b6ef3;
+}
+
+.pc-verified.off {
+  color: #a5abb3;
+}
+
+.pc-check {
+  width: 26rpx;
+  height: 26rpx;
+  border-radius: 50%;
+  background: #1b6ef3;
+  color: #fff;
+  font-size: 16rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-line2 {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 4rpx;
+  min-width: 0;
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: #8a9099;
+}
+
+.pc-org,
+.pc-role {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.pc-sep {
+  flex-shrink: 0;
+  color: #c9cdd4;
+}
+
+.pc-rank {
+  flex-shrink: 0;
+  font-size: 20rpx;
+  color: #b7bcc4;
+}
+
+/* 匹配信息：一行内多段，超宽换行不溢出 */
+.pc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: #4e5969;
+}
+
+.pc-meta-i {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 16rpx;
+}
+
+.pc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 12rpx;
+}
+
+.pc-chip {
+  flex: 0 1 auto;
+  max-width: 100%;
+  height: 40rpx;
+  padding: 0 14rpx;
+  border-radius: 6rpx;
+  background: #f2f5fa;
+  color: #5a6b85;
+  font-size: 22rpx;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pc-chip.warn {
+  background: #fff4e6;
+  color: #b25f00;
+}
+
+.pc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.pc-history {
+  flex: 1;
+  min-width: 0;
+  font-size: 22rpx;
+  color: #8a9099;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pc-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.pc-btn {
+  height: 60rpx;
+  padding: 0 24rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-btn.ghost {
+  background: #fff;
+  border: 1rpx solid #d9dfe8;
+  color: #4e5969;
+}
+
+.pc-btn.primary {
+  background: #1b6ef3;
+  color: #fff;
+}
+
+.pc-btn.disabled {
+  background: #f2f3f5;
+  color: #a5abb3;
+}

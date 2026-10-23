@@ -1,0 +1,20 @@
+.block-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.dispute-note {
+  padding: 16rpx;
+  border-radius: 10rpx;
+  background: #fdf3f3;
+  color: #b23a3a;
+  font-size: 24rpx;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+}
+
+.form-item {
+  border-bottom: none;
+  margin-bottom: 20rpx;
+}

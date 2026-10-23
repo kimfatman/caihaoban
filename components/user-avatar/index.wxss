@@ -1,0 +1,82 @@
+.ua {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* 图片与文字回退均为圆形，保证全局一致 */
+.ua-img,
+.ua-text {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.ua-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: #e3edfd;
+  color: #1b6ef3;
+}
+
+/* QQ 头像式角标：白色描边的小圆徽章 */
+.ua-tags {
+  position: absolute;
+  display: flex;
+  gap: 2rpx;
+  z-index: 2;
+}
+
+.ua-tags.br {
+  right: -2rpx;
+  bottom: -2rpx;
+}
+
+.ua-tags.tr {
+  right: -2rpx;
+  top: -2rpx;
+}
+
+.ua-tags.bl {
+  left: -2rpx;
+  bottom: -2rpx;
+}
+
+.ua-tags.tl {
+  left: -2rpx;
+  top: -2rpx;
+}
+
+.ua-tag {
+  border-radius: 50%;
+  border: 3rpx solid #fff;
+  background: #b7bcc4;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.14);
+}
+
+.ua-tag.primary {
+  background: #1b6ef3;
+}
+
+.ua-tag.success {
+  background: #12b76a;
+}
+
+.ua-tag.warn {
+  background: #f79009;
+}
+
+.ua-tag.danger {
+  background: #e54545;
+}
+
+.ua-tag.plain {
+  background: #b7bcc4;
+}

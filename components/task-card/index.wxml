@@ -1,0 +1,63 @@
+<view class="tm" bindtap="onTap" hover-class="tm-hover">
+  <user-avatar view="{{task.publisherAvatar}}" size="{{80}}" show-tags="{{false}}" />
+
+  <view class="tm-main">
+    <!-- A. 发布者身份行 -->
+    <view class="tm-line1">
+      <text class="tm-name ellipsis">{{task.publisherName}}</text>
+      <view class="tm-verified {{task.publisherCapabilityLevel}}">
+        <text class="tm-verified-icon" wx:if="{{task.publisherCapabilityLevel !== 'none'}}">✓</text>
+        <text class="tm-verified-text">{{task.publisherVerifiedText}}</text>
+      </view>
+      <view class="tm-idtag">{{task.publisherOrgType}}</view>
+    </view>
+
+    <view class="tm-line2">
+      <text class="tm-org ellipsis">{{task.publisherOrgName}}</text>
+      <text class="tm-sep" wx:if="{{task.publisherTitle}}">·</text>
+      <text class="tm-role ellipsis" wx:if="{{task.publisherTitle}}">{{task.publisherTitle}}</text>
+      <text class="tm-time">{{task.publishedAtText}}</text>
+    </view>
+
+    <!-- B. 任务内容区 -->
+    <view class="tm-body">
+      <view class="tm-title">{{task.title}}</view>
+      <view class="tm-desc" wx:if="{{task.description}}">{{task.description}}</view>
+      <!-- 元信息只放地区与工作量，业务类别统一由下方标签区承载，避免同一文案重复两遍 -->
+      <view class="tm-meta">
+        <text class="tm-meta-i">{{task.regionCityText}}</text>
+        <block wx:if="{{task.workloadText}}">
+          <text class="tm-meta-sep">·</text>
+          <text class="tm-meta-i">{{task.workloadText}}</text>
+        </block>
+      </view>
+    </view>
+
+    <!-- C. 标签区 -->
+    <view class="tm-tags" wx:if="{{task.tags.length > 0}}">
+      <view class="tm-tag {{item.type}}" wx:for="{{task.tags}}" wx:key="key">{{item.label}}</view>
+    </view>
+
+    <!-- 仅在推荐列表中出现：匹配原因 -->
+    <view class="tm-reasons" wx:if="{{reasons.length > 0}}">
+      <text class="tm-reason-label">推荐理由</text>
+      <view class="tm-reason" wx:for="{{reasons}}" wx:key="*this">{{item}}</view>
+    </view>
+
+    <!-- D. 底部操作区 -->
+    <view class="tm-foot">
+      <text class="tm-price {{task.referencePrice ? '' : 'tm-price-none'}}">{{task.referencePriceText}}</text>
+      <view class="tm-actions">
+        <status-tag label="{{task.stateLabel}}" tag="{{task.stateTag}}" />
+        <!-- 接单人视角的列表（如「为我推荐」）才出现报价入口 -->
+        <view
+          wx:if="{{quotable && task.canQuote}}"
+          class="tm-quote"
+          data-id="{{task.id}}"
+          catchtap="onQuote"
+        >{{task.myQuoteId || task.orgQuoteId ? '修改报价' : '去报价'}}</view>
+        <text wx:else class="tm-enter">查看任务</text>
+      </view>
+    </view>
+  </view>
+</view>

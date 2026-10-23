@@ -1,0 +1,86 @@
+.tpc {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 20rpx;
+}
+
+.tpc-hover {
+  background: #fafbfc;
+}
+
+.tpc-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+
+.tpc-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 31rpx;
+  font-weight: 600;
+  color: #1f2329;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.tpc-summary {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #4e5969;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.tpc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 16rpx;
+}
+
+.tpc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid #ebedf0;
+}
+
+.tpc-author {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  min-width: 0;
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+.tpc-name {
+  color: #4e5969;
+}
+
+.tpc-meta {
+  max-width: 220rpx;
+}
+
+.tpc-stats {
+  display: flex;
+  gap: 20rpx;
+  flex-shrink: 0;
+}
+
+.tpc-stat {
+  font-size: 22rpx;
+  color: #8a9099;
+}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "话题详情",
+  "usingComponents": {
+    "user-avatar": "/components/user-avatar/index",
+    "empty-state": "/components/empty-state/index"
+  }
+}

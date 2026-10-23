@@ -1,0 +1,71 @@
+<view class="page" wx:if="{{quote}}">
+  <view class="hero">
+    <view class="between">
+      <text class="hero-label">报价金额</text>
+      <status-tag label="{{quote.statusLabel}}" tag="{{quote.statusTag}}" />
+    </view>
+    <text class="hero-amount">{{quote.amountText}}</text>
+    <text class="hero-sub">报价版本 V{{quote.versionCount}} · 更新于 {{quote.createdAtText}}</text>
+  </view>
+
+  <view class="card">
+    <view class="between" style="align-items:flex-start;">
+      <view class="row" style="gap:16rpx;flex:1;min-width:0;">
+        <user-avatar view="{{quote.userAvatar}}" size="{{80}}" tags="{{quote.userAvatar.tags}}" />
+        <view class="flex1">
+          <text class="org-name">{{quote.orgName}}</text>
+          <text class="muted">报价人 {{quote.userName}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="line"></view>
+    <view class="kv"><text class="k">预计完成</text><text class="v">{{quote.expectFinishText}}</text></view>
+    <view class="kv"><text class="k">费用包含范围</text><text class="v">{{quote.feeInclude || '未填写'}}</text></view>
+    <view class="kv"><text class="k">代垫费用</text><text class="v">{{quote.advanceFee || '无'}}</text></view>
+    <view class="kv" wx:if="{{quote.attachments.length > 0}}"><text class="k">附件</text><text class="v">{{quote.attachments.length}} 个</text></view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">报价说明</view>
+    <text class="paragraph">{{quote.remark || '未填写'}}</text>
+  </view>
+
+  <view class="card">
+    <view class="block-title">关联任务</view>
+    <view bindtap="goTask">
+      <view class="between">
+        <text class="title ellipsis flex1" style="font-size:28rpx;">{{quote.task.title}}</text>
+        <text class="tag {{quote.task.stateTag}}">{{quote.task.stateLabel}}</text>
+      </view>
+      <view class="kv mt8"><text class="k">服务区域</text><text class="v">{{quote.task.regionText}}</text></view>
+      <view class="kv"><text class="k">参考价</text><text class="v">{{quote.task.referencePriceText}}</text></view>
+      <view class="kv"><text class="k">报价截止</text><text class="v">{{quote.task.quoteDeadlineText}}</text></view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">报价版本历史</view>
+    <view class="timeline-item {{index === 0 ? 'active' : ''}}" wx:for="{{quote.versions}}" wx:key="version">
+      <view class="between">
+        <text class="desc">V{{item.version}} · {{item.action}}</text>
+        <text class="muted">{{item.updatedAtText}}</text>
+      </view>
+      <view class="between mt8">
+        <text class="price" style="font-size:28rpx;">{{item.amountText}}</text>
+        <text class="muted">预计完成 {{item.expectFinishText}}</text>
+      </view>
+      <text class="muted version-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+    </view>
+  </view>
+
+  <view class="tip-bottom">
+    需求方接受报价后生成唯一订单，其他报价自动失效；报价方在截止前可修改或撤回，历史版本永久保留。
+  </view>
+
+  <view class="footer-holder" wx:if="{{quote.canAccept || quote.orderId || quote.canChat}}"></view>
+  <view class="footer-bar" wx:if="{{quote.canAccept || quote.orderId || quote.canChat}}">
+    <view class="btn btn-ghost" wx:if="{{quote.canChat}}" bindtap="onChatTap">{{quote.chatLabel}}</view>
+    <view class="btn btn-primary" wx:if="{{quote.canAccept}}" bindtap="onAccept">接受该报价</view>
+    <view class="btn btn-ghost" wx:if="{{!quote.canAccept && quote.orderId}}" bindtap="goOrder">查看已生成订单</view>
+  </view>
+</view>

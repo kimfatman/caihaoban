@@ -1,0 +1,70 @@
+<view class="page" wx:if="{{provider}}">
+  <view class="pd-head">
+    <user-avatar view="{{provider.avatar}}" size="{{120}}" tags="{{provider.avatar.tags}}" />
+    <view class="pd-head-main">
+      <view class="pd-name-row">
+        <text class="pd-name ellipsis">{{provider.nickname}}</text>
+        <text class="tag {{provider.idVerified ? 'tag-success' : 'tag-warn'}}">{{provider.idVerified ? '已实名' : '未实名'}}</text>
+      </view>
+      <text class="muted ellipsis">{{provider.orgName}} · {{provider.title || provider.orgType}}</text>
+      <view class="pd-status">
+        <text class="tag {{provider.accepting ? 'tag-primary' : 'tag-plain'}}">{{provider.orderStatusLabel}}</text>
+        <text class="tag tag-plain">{{provider.orgStatusLabel}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{provider.hasProfile}}">
+    <view class="block-title">服务能力</view>
+    <view class="pd-tags" wx:if="{{provider.businessLabels.length}}">
+      <text class="tag tag-primary" wx:for="{{provider.businessLabels}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="kv"><text class="k">服务地区</text><text class="v">{{provider.areaSummary}}</text></view>
+    <view class="kv"><text class="k">服务方式</text><text class="v">{{provider.serviceModeLabel}}</text></view>
+    <view class="kv"><text class="k">月度接单</text><text class="v">{{provider.monthlyCapacityLabel}}</text></view>
+    <view class="kv"><text class="k">报价方式</text><text class="v">{{provider.quoteModeLabel}}</text></view>
+    <view class="kv"><text class="k">服务年限</text><text class="v">{{provider.yearsText}}</text></view>
+    <view class="kv" wx:if="{{provider.qualificationLabels.length}}">
+      <text class="k">相关资质</text>
+      <text class="v">{{provider.qualificationLabels}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">历史履约</view>
+    <view class="pd-stats">
+      <view class="pd-stat">
+        <text class="pd-stat-value">{{provider.completedCount}}</text>
+        <text class="pd-stat-label">完成单量</text>
+      </view>
+      <view class="pd-stat">
+        <text class="pd-stat-value">{{provider.historyText}}</text>
+        <text class="pd-stat-label">评分与评价</text>
+      </view>
+    </view>
+    <view class="form-tip">数据来自平台真实完成的订单与评价，无记录时不做任何推测。</view>
+  </view>
+
+  <view class="card" wx:if="{{provider.intro}}">
+    <view class="block-title">服务介绍</view>
+    <text class="paragraph">{{provider.intro}}</text>
+  </view>
+
+  <view class="card" wx:if="{{!provider.hasProfile}}">
+    <view class="block-title">服务能力</view>
+    <text class="muted">该用户尚未填写服务能力档案，暂不支持按能力推荐。</text>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar" wx:if="{{!provider.isSelf}}">
+    <view class="btn btn-ghost" bindtap="onChat">私信沟通</view>
+    <view
+      class="btn btn-primary {{provider.canInvite && taskId ? '' : 'btn-disabled'}}"
+      bindtap="onInvite"
+    >{{inviting ? '发送中…' : '邀请报价'}}</view>
+  </view>
+</view>
+
+<view class="page" wx:elif="{{loading}}">
+  <view class="loading-tip">加载中…</view>
+</view>

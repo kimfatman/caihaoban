@@ -1,0 +1,52 @@
+<view class="page">
+  <view class="tabs">
+    <view class="tab {{tab === 'pending' ? 'active' : ''}}" data-value="pending" bindtap="onTabTap">待评价（{{pending.length}}）</view>
+    <view class="tab {{tab === 'done' ? 'active' : ''}}" data-value="done" bindtap="onTabTap">已评价（{{done.length}}）</view>
+  </view>
+
+  <block wx:if="{{tab === 'pending'}}">
+    <view class="review-card" wx:for="{{pending}}" wx:key="id">
+      <view class="between">
+        <text class="title ellipsis flex1" style="font-size:28rpx;">{{item.taskTitle}}</text>
+        <text class="tag {{item.statusTag}}">{{item.statusLabel}}</text>
+      </view>
+      <view class="kv mt8"><text class="k">承接方</text><text class="v">{{item.supplier.orgName}}</text></view>
+      <view class="kv"><text class="k">应结总额</text><text class="v price">{{item.totalText}}</text></view>
+      <view class="kv"><text class="k">订单号</text><text class="v">{{item.no}}</text></view>
+      <view class="card-foot" wx:if="{{item.permissions.canReview}}">
+        <view class="btn btn-sm btn-primary" data-id="{{item.id}}" bindtap="goReview">去评价</view>
+      </view>
+      <view class="card-foot" wx:else>
+        <text class="muted">订单仍在履约中，完成后可评价</text>
+      </view>
+    </view>
+
+    <empty-state
+      wx:if="{{!loading && pending.length === 0}}"
+      text="暂无待评价服务"
+      tip="订单完成后可对接单方进行评价，记录服务表现"
+      btnText="查看我的订单"
+      bind:action="goOrders"
+    />
+  </block>
+
+  <block wx:else>
+    <view class="review-card" wx:for="{{done}}" wx:key="id">
+      <view class="between">
+        <text class="title ellipsis flex1" style="font-size:28rpx;">{{item.taskTitle}}</text>
+        <text class="muted">{{item.review.createdAtText}}</text>
+      </view>
+      <view class="row mt8" style="gap:8rpx;">
+        <text class="star {{star <= item.review.rating ? 'on' : ''}}" wx:for="{{stars}}" wx:for-item="star" wx:key="*this">★</text>
+        <text class="muted">{{item.review.rating}}.0</text>
+      </view>
+      <view class="row" style="gap:12rpx;flex-wrap:wrap;margin-top:8rpx;" wx:if="{{item.review.tags.length > 0}}">
+        <text class="tag tag-primary" wx:for="{{item.review.tags}}" wx:key="*this">{{item}}</text>
+      </view>
+      <text class="desc mt8" wx:if="{{item.review.content}}">{{item.review.content}}</text>
+      <view class="kv mt8"><text class="k">承接方</text><text class="v">{{item.supplier.orgName}}</text></view>
+    </view>
+
+    <empty-state wx:if="{{!loading && done.length === 0}}" text="暂无已评价服务" />
+  </block>
+</view>

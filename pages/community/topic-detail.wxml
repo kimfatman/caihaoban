@@ -1,0 +1,108 @@
+<view class="page" wx:if="{{topic}}">
+  <view class="topic-main">
+    <text class="topic-title">{{topic.title}}</text>
+    <view class="row" style="gap:12rpx;margin-top:16rpx;flex-wrap:wrap;">
+      <text class="tag tag-primary">{{topic.categoryLabel}}</text>
+      <text class="tag tag-plain" wx:if="{{topic.region}}">{{topic.region}}</text>
+      <text class="tag tag-plain">{{topic.createdAtText}}</text>
+    </view>
+
+    <view class="author-row">
+      <user-avatar view="{{topic.authorAvatar}}" size="{{72}}" tags="{{topic.authorAvatar.tags}}" />
+      <view class="flex1">
+        <text class="author-name">{{topic.authorName}}</text>
+        <text class="muted ellipsis">{{topic.authorOrg}}</text>
+      </view>
+      <text class="report-link" bindtap="goReport">举报</text>
+    </view>
+
+    <text class="topic-content">{{topic.content}}</text>
+
+    <view class="image-list" wx:if="{{topic.images.length > 0}}">
+      <image wx:for="{{topic.images}}" wx:key="*this" src="{{item}}" mode="aspectFill" class="topic-image" />
+    </view>
+
+    <view class="attachment" wx:for="{{topic.attachments}}" wx:key="name" data-file="{{item}}" bindtap="previewAttachment">
+      <view class="file-icon">附件</view>
+      <view class="flex1">
+        <text class="file-name ellipsis">{{item.name}}</text>
+        <text class="muted">{{item.size || ''}}</text>
+      </view>
+    </view>
+
+    <view class="topic-stats">
+      <text class="muted">{{topic.viewCount}} 次浏览</text>
+      <text class="muted">赞 {{topic.likeCount}} · 评论 {{topic.commentCount}}</text>
+    </view>
+
+    <view class="topic-actions">
+      <view class="action-btn {{topic.liked ? 'active' : ''}}" bindtap="onLike">
+        {{topic.liked ? '已赞' : '点赞'}}
+      </view>
+      <view class="action-btn {{topic.favorited ? 'active' : ''}}" bindtap="onFavorite">
+        {{topic.favorited ? '已收藏' : '收藏'}}
+      </view>
+      <view class="action-btn" bindtap="focusComment">评论</view>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>全部评论（{{topic.commentCount}}）</text>
+  </view>
+
+  <view class="comment-list" wx:if="{{topic.comments.length > 0}}">
+    <view class="comment" wx:for="{{topic.comments}}" wx:key="id" wx:for-item="comment">
+      <user-avatar view="{{comment.userAvatar}}" size="{{56}}" tags="{{comment.userAvatar.tags}}" />
+      <view class="comment-body">
+        <view class="between">
+          <text class="comment-name">{{comment.userName}}</text>
+          <text class="muted">{{comment.createdAtText}}</text>
+        </view>
+        <text class="comment-org">{{comment.userOrg}}</text>
+        <text class="comment-content">{{comment.content}}</text>
+        <view class="comment-actions">
+          <text data-id="{{comment.id}}" data-name="{{comment.userName}}" bindtap="replyComment">回复</text>
+          <text data-id="{{comment.id}}" bindtap="likeComment">{{comment.liked ? '已赞' : '赞'}} {{comment.likeCount}}</text>
+          <text class="muted" wx:if="{{comment.isMine}}">我的评论</text>
+        </view>
+
+        <view class="reply-list" wx:if="{{comment.replies.length > 0}}">
+          <view class="reply" wx:for="{{comment.replies}}" wx:key="id" wx:for-item="reply">
+            <view class="between">
+              <text class="reply-name">{{reply.userName}} 回复 {{reply.replyTo}}</text>
+              <text class="muted">{{reply.createdAtText}}</text>
+            </view>
+            <text class="comment-content">{{reply.content}}</text>
+            <view class="comment-actions">
+              <text data-id="{{comment.id}}" data-name="{{reply.userName}}" bindtap="replyComment">回复</text>
+              <text data-id="{{comment.id}}" data-reply="{{reply.id}}" bindtap="likeComment">{{reply.liked ? '已赞' : '赞'}} {{reply.likeCount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <empty-state wx:else text="还没有评论" tip="来说说你的实操经验吧" />
+
+  <view class="comment-holder"></view>
+
+  <view class="comment-bar">
+    <view class="reply-hint" wx:if="{{replyTarget}}" bindtap="cancelReply">
+      回复 {{replyTarget.replyTo}} · 点击取消
+    </view>
+    <view class="comment-input-row">
+      <input
+        class="comment-input"
+        value="{{commentText}}"
+        focus="{{focusInput}}"
+        placeholder="{{commentPlaceholder}}"
+        placeholder-class="placeholder"
+        confirm-type="send"
+        bindinput="onCommentInput"
+        bindconfirm="submitComment"
+      />
+      <view class="send-btn {{submitting ? 'disabled' : ''}}" bindtap="submitComment">发送</view>
+    </view>
+  </view>
+</view>

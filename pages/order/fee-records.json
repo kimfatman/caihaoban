@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "费用记录",
+  "usingComponents": {
+    "status-tag": "/components/status-tag/index"
+  }
+}

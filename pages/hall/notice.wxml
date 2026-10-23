@@ -1,0 +1,94 @@
+<view class="page">
+  <view class="nt-filter">
+    <view class="search-bar">
+      <text class="search-label">搜索</text>
+      <input
+        value="{{keyword}}"
+        placeholder="搜索公告标题或正文关键词"
+        placeholder-class="placeholder"
+        confirm-type="search"
+        bindinput="onKeywordInput"
+        bindconfirm="onSearch"
+      />
+      <text class="search-action" bindtap="onSearch">查询</text>
+    </view>
+
+    <view class="nt-mode">
+      <view class="nt-mode-item {{mine ? '' : 'active'}}" data-mine="{{false}}" bindtap="onModeTap">全部公告</view>
+      <view class="nt-mode-item {{mine ? 'active' : ''}}" data-mine="{{true}}" bindtap="onModeTap">我的发布</view>
+    </view>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x wx:if="{{!mine}}">
+    <view class="chips">
+      <view
+        class="chip {{category === item.value ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onCategoryTap"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="nt-tip">
+    <text class="nt-tip-icon">告</text>
+    <text class="nt-tip-text">
+      公告牌用于业务合作、服务推广与资源对接，发布后需审核通过才会公开展示。付费推广为演示功能，暂未开通真实支付。
+    </text>
+  </view>
+
+  <view class="nt-count" wx:if="{{!loading}}">
+    <text>共 {{total}} 条公告</text>
+    <text class="nt-count-sort" wx:if="{{!mine}}">置顶优先 · 按发布时间排序</text>
+  </view>
+
+  <block wx:if="{{list.length > 0}}">
+    <view
+      class="nt-card"
+      wx:for="{{list}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onNoticeTap"
+      hover-class="nt-card-hover"
+    >
+      <view class="nt-card-head">
+        <text class="tag {{item.badgeTag}}" wx:if="{{item.badgeText}}">{{item.badgeText}}</text>
+        <text class="tag tag-primary">{{item.categoryLabel}}</text>
+        <text class="tag {{item.statusTag}}" wx:if="{{mine}}">{{item.statusLabel}}</text>
+        <text class="nt-region ellipsis" wx:if="{{item.region}}">{{item.region}}</text>
+      </view>
+
+      <view class="nt-title">{{item.title}}</view>
+      <view class="nt-summary">{{item.summary}}</view>
+
+      <view class="nt-pub">
+        <text class="nt-pub-name ellipsis">{{item.publisherName}}</text>
+        <text class="nt-pub-org ellipsis">{{item.publisherOrgName}}</text>
+      </view>
+
+      <view class="nt-meta">
+        <text>{{item.createdAtText}}</text>
+        <text class="nt-dot">·</text>
+        <text>{{item.validPeriodText}}</text>
+        <text class="nt-dot">·</text>
+        <text>{{item.viewCountText}}</text>
+      </view>
+    </view>
+  </block>
+
+  <empty-state
+    wx:elif="{{!loading}}"
+    text="{{empty.text}}"
+    tip="{{empty.tip}}"
+    btnText="{{empty.btnText}}"
+    bind:action="onEmptyAction"
+  />
+
+  <view class="nt-loading" wx:if="{{loading}}">加载中…</view>
+  <view class="nt-more" wx:elif="{{loadingMore}}">加载中…</view>
+  <view class="nt-more" wx:elif="{{hasMore}}">上拉加载更多</view>
+
+  <view class="footer-holder"></view>
+  <view class="fab" bindtap="goPublish">发布公告</view>
+</view>

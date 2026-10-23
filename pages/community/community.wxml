@@ -1,0 +1,64 @@
+<view class="page">
+  <view class="community-header">
+    <view class="search-bar">
+      <text class="search-label">搜索</text>
+      <input
+        value="{{keyword}}"
+        placeholder="搜索话题、业务经验、地方办事经验"
+        placeholder-class="placeholder"
+        confirm-type="search"
+        bindinput="onKeywordInput"
+        bindconfirm="onSearch"
+      />
+      <text class="search-action" bindtap="onSearch">查询</text>
+    </view>
+
+    <view class="sort-row">
+      <view class="sort-tabs">
+        <text class="sort-item {{sort === 'latest' ? 'active' : ''}}" data-value="latest" bindtap="onSortTap">最新</text>
+        <text class="sort-item {{sort === 'hot' ? 'active' : ''}}" data-value="hot" bindtap="onSortTap">热门</text>
+      </view>
+      <picker mode="selector" range="{{regions}}" value="{{regionIndex}}" bindchange="onRegionChange">
+        <view class="region-picker {{region ? 'active' : ''}}">
+          <text>{{region || '全部地区'}}</text>
+          <view class="arrow"></view>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x>
+    <view class="chips">
+      <view
+        class="chip {{category === item.value ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onCategoryTap"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="community-tip">
+    发布前请脱敏客户名称、证件号码、财务资料等信息；违规内容将被处理并记录。
+  </view>
+
+  <view class="community-count" wx:if="{{!loading}}">共 {{total}} 个话题</view>
+
+  <block wx:if="{{list.length > 0}}">
+    <topic-card wx:for="{{list}}" wx:key="id" topic="{{item}}" bind:topictap="onTopicTap" />
+  </block>
+
+  <empty-state
+    wx:elif="{{!loading}}"
+    text="暂无相关话题"
+    tip="换个关键词试试，或发布你的第一条同行话题"
+    btnText="发布话题"
+    bind:action="goPublish"
+  />
+
+  <view class="loading" wx:if="{{loading}}">加载中…</view>
+
+  <view class="footer-holder"></view>
+  <view class="fab" bindtap="goPublish">发布话题</view>
+</view>

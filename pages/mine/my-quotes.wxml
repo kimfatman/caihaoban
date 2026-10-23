@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="notice">报价方默认不能查看其他报价金额；每次修改都会保留历史版本，截止前可撤回。</view>
+
+  <view
+    class="quote-card"
+    wx:for="{{list}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="onQuoteTap"
+  >
+    <view class="between">
+      <text class="title ellipsis flex1" style="font-size:28rpx;">{{item.taskTitle}}</text>
+      <text class="tag {{item.statusTag}}">{{item.statusLabel}}</text>
+    </view>
+    <view class="between mt16">
+      <text class="amount">{{item.amountText}}</text>
+      <text class="muted">V{{item.versionCount}} · {{item.createdAtText}}</text>
+    </view>
+    <view class="row mt8" style="gap:12rpx;">
+      <text class="tag tag-plain">{{item.orgName}}</text>
+      <text class="tag tag-plain">任务：{{item.taskStateLabel}}</text>
+    </view>
+    <view class="quote-foot">
+      <text class="muted">预计完成 {{item.expectFinishText}}</text>
+      <text class="link" data-task="{{item.taskId}}" catchtap="onTaskTap">查看任务 ›</text>
+    </view>
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && list.length === 0}}"
+    text="还没有提交过报价"
+    tip="在任务大厅找到合适的任务后即可提交报价"
+    btnText="去任务大厅"
+    bind:action="goHall"
+  />
+</view>

@@ -1,0 +1,72 @@
+.oc {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 20rpx;
+}
+
+.oc-hover {
+  background: #fafbfc;
+}
+
+.oc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.oc-no {
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+.oc-title {
+  display: block;
+  margin-top: 14rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2329;
+  line-height: 1.45;
+}
+
+.oc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 14rpx;
+}
+
+.oc-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid #ebedf0;
+}
+
+.oc-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  min-width: 0;
+}
+
+.oc-right {
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.oc-amount {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #ff6a00;
+}
+
+.oc-org,
+.oc-meta {
+  font-size: 22rpx;
+  color: #8a9099;
+  max-width: 380rpx;
+}

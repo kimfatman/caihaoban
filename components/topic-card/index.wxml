@@ -1,0 +1,23 @@
+<view class="tpc" bindtap="onTap" hover-class="tpc-hover">
+  <view class="tpc-head">
+    <text class="tpc-title">{{topic.title}}</text>
+    <text class="tag tag-warn" wx:if="{{showStatus && topic.statusLabel}}">{{topic.statusLabel}}</text>
+  </view>
+  <text class="tpc-summary">{{topic.summary}}</text>
+  <view class="tpc-tags">
+    <text class="tag tag-primary">{{topic.categoryLabel}}</text>
+    <text class="tag tag-plain" wx:if="{{topic.region}}">{{topic.region}}</text>
+    <text class="tag tag-plain" wx:if="{{topic.attachments.length > 0}}">含附件</text>
+  </view>
+  <view class="tpc-foot">
+    <view class="tpc-author">
+      <text class="tpc-name">{{topic.authorName}}</text>
+      <text class="tpc-meta ellipsis">{{topic.authorOrg}}</text>
+      <text class="tpc-meta">{{topic.createdAtText}}</text>
+    </view>
+    <view class="tpc-stats">
+      <text class="tpc-stat">赞 {{topic.likeCount}}</text>
+      <text class="tpc-stat">评论 {{topic.commentCount}}</text>
+    </view>
+  </view>
+</view>

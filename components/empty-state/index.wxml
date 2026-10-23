@@ -1,0 +1,6 @@
+<view class="empty-state">
+  <view class="empty-circle">∅</view>
+  <text class="empty-text">{{text}}</text>
+  <text class="empty-tip" wx:if="{{tip}}">{{tip}}</text>
+  <view class="empty-btn" wx:if="{{btnText}}" bindtap="onAction">{{btnText}}</view>
+</view>

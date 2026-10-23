@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "争议处理",
+  "usingComponents": {
+    "status-tag": "/components/status-tag/index"
+  }
+}

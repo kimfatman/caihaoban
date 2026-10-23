@@ -1,0 +1,44 @@
+<view class="pc" bindtap="onProfile" hover-class="pc-hover">
+  <view class="pc-head">
+    <user-avatar view="{{item.avatar}}" size="{{88}}" tags="{{item.avatar.tags}}" />
+
+    <view class="pc-ident">
+      <view class="pc-line1">
+        <text class="pc-name ellipsis">{{item.nickname}}</text>
+        <view class="pc-verified {{item.idVerified ? 'on' : 'off'}}">
+          <text class="pc-check" wx:if="{{item.idVerified}}">✓</text>
+          <text>{{item.idVerified ? '已实名' : '未实名'}}</text>
+        </view>
+      </view>
+      <view class="pc-line2">
+        <text class="pc-org ellipsis">{{item.orgName}}</text>
+        <text class="pc-sep" wx:if="{{item.orgName && item.title}}">·</text>
+        <text class="pc-role ellipsis" wx:if="{{item.title}}">{{item.title}}</text>
+      </view>
+    </view>
+
+    <text class="pc-rank" wx:if="{{item.rank}}">NO.{{item.rank}}</text>
+  </view>
+
+  <view class="pc-meta">
+    <text class="pc-meta-i" wx:if="{{item.businessLabels.length}}">{{item.businessLabels[0]}}</text>
+    <text class="pc-meta-i" wx:if="{{item.businessMore > 0}}">+{{item.businessMore}}</text>
+    <text class="pc-meta-i">{{item.areaText}}</text>
+    <text class="pc-meta-i">{{item.serviceModeLabel}}</text>
+  </view>
+
+  <view class="pc-chips">
+    <view class="pc-chip" wx:for="{{item.reasons}}" wx:key="*this">{{item}}</view>
+    <view class="pc-chip warn" wx:for="{{item.flags}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="pc-foot">
+    <text class="pc-history">{{item.historyText}}</text>
+    <view class="pc-actions">
+      <view class="pc-btn ghost" catchtap="onProfile">查看主页</view>
+      <view class="pc-btn primary {{item.canInvite ? '' : 'disabled'}}" catchtap="onInvite">
+        {{item.hasQuoted ? '已报价' : item.canInvite ? '邀请报价' : '暂不可邀请'}}
+      </view>
+    </view>
+  </view>
+</view>

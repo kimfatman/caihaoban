@@ -1,0 +1,327 @@
+<view class="page" wx:if="{{order}}">
+  <view class="hero">
+    <view class="between">
+      <text class="hero-no" bindtap="copyNo">订单号 {{order.no}}</text>
+      <status-tag label="{{order.statusLabel}}" tag="{{order.statusTag}}" />
+    </view>
+    <text class="hero-title">{{order.taskTitle}}</text>
+    <view class="row" style="gap:12rpx;margin-top:12rpx;flex-wrap:wrap;">
+      <text class="tag tag-primary">{{order.sideLabel}}</text>
+      <text class="tag tag-plain">{{order.serviceTypeLabel}}</text>
+      <text class="tag tag-plain">{{order.regionText}}</text>
+    </view>
+    <view class="hero-amount-row">
+      <view class="hero-amount">
+        <text class="hero-label">应结总额</text>
+        <text class="hero-value">{{order.totalText}}</text>
+      </view>
+      <view class="hero-dates">
+        <text class="muted">成交于 {{order.createdAtText}}</text>
+        <text class="muted">期望完成 {{order.expectedFinishText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="notice" wx:if="{{order.status === 'disputing'}}">
+    该订单正在争议处理中，平台已受理，请按通知补充材料。
+  </view>
+
+  <view class="card">
+    <view class="block-title">交易双方</view>
+    <view class="party-row">
+      <text class="party-role">需求方</text>
+      <view class="flex1">
+        <text class="party-org">{{order.demander.orgName}}</text>
+        <text class="muted">{{order.demander.name}} · {{order.demander.phone}}</text>
+      </view>
+      <block wx:if="{{order.side === 'supply'}}">
+        <view class="call-btn" bindtap="chatCounterpart">私信</view>
+        <view class="call-btn" bindtap="callCounterpart">电话</view>
+      </block>
+    </view>
+    <view class="party-row">
+      <text class="party-role">承接方</text>
+      <view class="flex1">
+        <text class="party-org">{{order.supplier.orgName}}</text>
+        <text class="muted">{{order.supplier.name}} · {{order.supplier.phone}}</text>
+      </view>
+      <block wx:if="{{order.side === 'demand'}}">
+        <view class="call-btn" bindtap="chatCounterpart">私信</view>
+        <view class="call-btn" bindtap="callCounterpart">电话</view>
+      </block>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">成交报价快照</text>
+      <text class="muted">V{{order.quoteSnapshotView.version}} · {{order.quoteSnapshotView.snapshotAtText}}</text>
+    </view>
+    <view class="amount-row">
+      <text class="price" style="font-size:36rpx;">{{order.quoteSnapshotView.amountText}}</text>
+      <text class="muted">快照不可修改</text>
+    </view>
+    <view class="kv"><text class="k">费用包含范围</text><text class="v">{{order.quoteSnapshotView.feeInclude || '未填写'}}</text></view>
+    <view class="kv"><text class="k">代垫费用</text><text class="v">{{order.quoteSnapshotView.advanceFee || '无'}}</text></view>
+    <view class="kv"><text class="k">报价说明</text><text class="v">{{order.quoteSnapshotView.remark || '未填写'}}</text></view>
+  </view>
+
+  <view class="card">
+    <view class="between" bindtap="goFeeRecords">
+      <text class="block-title" style="margin-bottom:0;">费用概览</text>
+      <text class="muted">费用记录 ›</text>
+    </view>
+    <view class="fee-row"><text>初始成交价</text><text>{{order.priceText}}</text></view>
+    <view class="fee-row"><text>额外费用（双方已确认）</text><text>{{order.extraFeeText}}</text></view>
+    <view class="fee-row total"><text>应结总额</text><text class="price">{{order.totalText}}</text></view>
+    <view class="form-tip">平台不提供资金支付功能，收付款由双方线下完成并在此申报、确认。</view>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">履约进度</text>
+      <view class="btn btn-sm btn-ghost" wx:if="{{order.permissions.canProgress}}" data-type="progress" bindtap="goRecord">更新进度</view>
+    </view>
+    <view class="timeline" wx:if="{{order.progresses.length > 0}}">
+      <view class="timeline-item active" wx:for="{{order.progresses}}" wx:key="id">
+        <text class="timeline-text">{{item.content}}</text>
+        <text class="muted">{{item.byName}} · {{item.atText}}</text>
+      </view>
+    </view>
+    <view class="empty-line" wx:else>暂无进度记录，承接方开始履约后可在此更新。</view>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">履约凭证</text>
+      <view class="btn btn-sm btn-ghost" wx:if="{{order.permissions.canSubmitEvidence}}" data-type="evidence" bindtap="goRecord">提交凭证</view>
+    </view>
+    <view class="evidence-item" wx:for="{{order.evidences}}" wx:key="id">
+      <view class="between">
+        <text class="desc">{{item.type}}</text>
+        <text class="muted">{{item.atText}}</text>
+      </view>
+      <text class="timeline-text">{{item.content}}</text>
+      <text class="muted">{{item.byName}} 提交 · {{item.files.length}} 个文件</text>
+    </view>
+    <view class="empty-line" wx:if="{{order.evidences.length === 0}}">暂无凭证，承接方提交成果后可申请验收。</view>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">费用变更</text>
+      <view class="btn btn-sm btn-ghost" wx:if="{{order.permissions.canFeeChange}}" bindtap="goFeeChange">申请变更</view>
+    </view>
+    <view class="record-item" wx:for="{{order.feeChanges}}" wx:key="id">
+      <view class="between">
+        <text class="desc">变更 V{{item.version}} · {{item.createdByName}} 发起</text>
+        <status-tag label="{{item.statusLabel}}" tag="{{item.statusTag}}" />
+      </view>
+      <view class="between mt8">
+        <text class="muted">{{item.beforeText}} → {{item.afterText}}</text>
+        <text class="diff">{{item.diffText}}</text>
+      </view>
+      <text class="muted record-reason">原因：{{item.reason}}</text>
+      <text class="muted">{{item.createdAtText}}</text>
+      <view class="record-actions" wx:if="{{item.canConfirm && !item.isMine}}">
+        <view class="btn btn-sm" data-id="{{item.id}}" data-agree="0" bindtap="confirmFee">拒绝</view>
+        <view class="btn btn-sm btn-primary" data-id="{{item.id}}" data-agree="1" bindtap="confirmFee">确认</view>
+      </view>
+      <text class="muted" wx:elif="{{item.canConfirm && item.isMine}}">等待对方确认</text>
+    </view>
+    <view class="empty-line" wx:if="{{order.feeChanges.length === 0}}">暂无费用变更记录。</view>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">收付款申报</text>
+      <view class="btn btn-sm btn-ghost" wx:if="{{order.permissions.canDeclare}}" bindtap="goPayment">新增申报</view>
+    </view>
+    <view class="record-item" wx:for="{{order.payments}}" wx:key="id">
+      <view class="between">
+        <text class="desc">{{item.typeLabel}} · {{item.declaredByName}}</text>
+        <status-tag label="{{item.statusLabel}}" tag="{{item.statusTag}}" />
+      </view>
+      <view class="between mt8">
+        <text class="price" style="font-size:30rpx;">{{item.amountText}}</text>
+        <text class="muted">{{item.declaredAtText}}</text>
+      </view>
+      <text class="muted record-reason">{{item.remark}}</text>
+      <view class="record-actions" wx:if="{{item.canConfirm}}">
+        <view class="btn btn-sm" data-id="{{item.id}}" data-agree="0" bindtap="confirmPayment">否认</view>
+        <view class="btn btn-sm btn-primary" data-id="{{item.id}}" data-agree="1" bindtap="confirmPayment">确认</view>
+      </view>
+      <text class="muted" wx:elif="{{item.status === 'pending'}}">等待对方确认（用户申报，平台未核实）</text>
+    </view>
+    <view class="empty-line" wx:if="{{order.payments.length === 0}}">暂无收付款申报记录。</view>
+  </view>
+
+  <view class="card" wx:if="{{order.cancelRequestView}}">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">取消申请</text>
+      <text class="tag {{order.cancelRequestView.status === 'pending' ? 'tag-warn' : 'tag-plain'}}">{{order.cancelRequestView.statusLabel}}</text>
+    </view>
+    <text class="muted">{{order.cancelRequestView.byName}} 于 {{order.cancelRequestView.createdAtText}} 申请</text>
+    <text class="timeline-text">原因：{{order.cancelRequestView.reason}}</text>
+    <view class="record-actions" wx:if="{{order.permissions.canRespondCancel}}">
+      <view class="btn btn-sm" data-agree="0" bindtap="respondCancel">拒绝</view>
+      <view class="btn btn-sm btn-danger" data-agree="1" bindtap="respondCancel">同意取消</view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{order.dispute}}">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">争议处理</text>
+      <text class="tag {{order.dispute.status === 'processing' ? 'tag-danger' : 'tag-plain'}}">{{order.dispute.statusLabel}}</text>
+    </view>
+    <text class="timeline-text">{{order.dispute.reason}}</text>
+    <view class="kv"><text class="k">平台处理说明</text><text class="v">{{order.dispute.handlerNote || '处理中'}}</text></view>
+    <view class="timeline-item" wx:for="{{order.dispute.records}}" wx:key="at">
+      <text class="desc">{{item.action}}</text>
+      <text class="muted">{{item.by}} · {{item.atText}}</text>
+      <text class="muted" wx:if="{{item.remark}}">{{item.remark}}</text>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{order.review}}">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">我的评价</text>
+      <text class="muted">{{order.review.createdAtText}}</text>
+    </view>
+    <view class="row" style="gap:8rpx;margin-top:8rpx;">
+      <text class="star {{index < order.review.rating ? 'on' : ''}}" wx:for="{{stars}}" wx:key="*this">{{index < order.review.rating ? '★' : '☆'}}</text>
+    </view>
+    <view class="row" style="gap:12rpx;flex-wrap:wrap;margin-top:8rpx;" wx:if="{{order.review.tags.length > 0}}">
+      <text class="tag tag-primary" wx:for="{{order.review.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+    <text class="desc" wx:if="{{order.review.content}}">{{order.review.content}}</text>
+  </view>
+
+  <view class="card">
+    <view class="block-title">更多操作</view>
+    <view class="action-grid">
+      <view class="action" bindtap="goFeeRecords">费用记录</view>
+      <view class="action" wx:if="{{order.permissions.canFeeChange}}" bindtap="goFeeChange">申请费用变更</view>
+      <view class="action" wx:if="{{order.permissions.canDeclare}}" bindtap="goPayment">收付款申报</view>
+      <view class="action" wx:if="{{order.permissions.canCancel}}" bindtap="openCancel">申请取消订单</view>
+      <view class="action" wx:if="{{order.permissions.canDispute}}" bindtap="goDispute">申请争议处理</view>
+      <view class="action" bindtap="chatCounterpart">私信对方</view>
+      <view class="action" bindtap="callCounterpart">电话对方</view>
+      <view class="action" bindtap="goTask">查看原始任务</view>
+    </view>
+    <view class="form-tip">订单资料仅向交易双方授权成员开放；操作记录将写入审计日志。</view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">操作历史</view>
+    <view class="timeline-item" wx:for="{{order.operations}}" wx:key="id">
+      <view class="between">
+        <text class="desc">{{item.action}}</text>
+        <text class="muted">{{item.atText}}</text>
+      </view>
+      <view class="row" style="gap:8rpx;flex-wrap:wrap;">
+        <text class="muted">{{item.byName}}</text>
+        <text class="muted" wx:if="{{item.remark}}">· {{item.remark}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <block wx:if="{{order.permissions.canAccept}}">
+      <view class="btn" bindtap="openReject">退回补充</view>
+      <view class="btn btn-primary" bindtap="openAccept">验收通过</view>
+    </block>
+    <block wx:elif="{{order.permissions.canRespondCancel}}">
+      <view class="btn" data-agree="0" bindtap="respondCancel">拒绝取消</view>
+      <view class="btn btn-danger" data-agree="1" bindtap="respondCancel">同意取消</view>
+    </block>
+    <block wx:elif="{{order.permissions.canProgress || order.permissions.canSubmitEvidence}}">
+      <view class="btn" wx:if="{{order.permissions.canProgress}}" data-type="progress" bindtap="goRecord">更新进度</view>
+      <view class="btn btn-primary" wx:if="{{order.permissions.canSubmitEvidence}}" data-type="evidence" bindtap="goRecord">提交履约凭证</view>
+    </block>
+    <block wx:elif="{{order.permissions.canReview}}">
+      <view class="btn btn-primary" bindtap="openReview">评价承接方</view>
+    </block>
+    <block wx:else>
+      <view class="btn btn-disabled">{{order.footerHint}}</view>
+    </block>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showAccept}}" bindtap="closeAccept">
+    <view class="modal-panel" catchtap="noop">
+      <view class="modal-title">{{acceptResult === 'accept' ? '验收通过' : '退回补充'}}</view>
+      <view class="muted" style="text-align:center;margin-bottom:20rpx;">
+        {{acceptResult === 'accept' ? '验收通过后订单完成，不可再变更。' : '请说明需要补充的材料，订单将回到进行中。'}}
+      </view>
+      <textarea
+        class="form-textarea"
+        value="{{acceptRemark}}"
+        placeholder="{{acceptResult === 'accept' ? '验收备注（选填）' : '退回原因（必填）'}}"
+        placeholder-class="placeholder"
+        bindinput="onAcceptRemark"
+      />
+      <view class="btn-row mt24">
+        <view class="btn" bindtap="closeAccept">取消</view>
+        <view class="btn {{acceptResult === 'accept' ? 'btn-primary' : 'btn-danger'}}" bindtap="submitAccept">确认</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showCancel}}" bindtap="closeCancel">
+    <view class="modal-panel" catchtap="noop">
+      <view class="modal-title">申请取消订单</view>
+      <view class="muted" style="text-align:center;margin-bottom:20rpx;">
+        取消需对方确认，确认后订单关闭，任务同步关闭且不会自动重新开放。
+      </view>
+      <textarea
+        class="form-textarea"
+        value="{{cancelReason}}"
+        placeholder="请填写取消原因（至少 5 个字）"
+        placeholder-class="placeholder"
+        bindinput="onCancelReason"
+      />
+      <view class="btn-row mt24">
+        <view class="btn" bindtap="closeCancel">再想想</view>
+        <view class="btn btn-danger" bindtap="submitCancel">提交申请</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showReview}}" bindtap="closeReview">
+    <view class="modal-panel" catchtap="noop">
+      <view class="modal-title">评价承接方</view>
+      <view class="star-row">
+        <text
+          class="star {{rating >= item ? 'on' : ''}}"
+          wx:for="{{stars}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="setRating"
+        >★</text>
+      </view>
+      <view class="tag-row">
+        <text
+          class="tag {{item.selected ? 'tag-primary' : 'tag-plain'}}"
+          wx:for="{{tagOptions}}"
+          wx:key="label"
+          data-tag="{{item.label}}"
+          bindtap="toggleTag"
+        >{{item.label}}</text>
+      </view>
+      <textarea
+        class="form-textarea"
+        value="{{reviewContent}}"
+        placeholder="补充评价内容（选填）"
+        placeholder-class="placeholder"
+        bindinput="onReviewInput"
+      />
+      <view class="btn-row mt24">
+        <view class="btn" bindtap="closeReview">取消</view>
+        <view class="btn btn-primary" bindtap="submitReview">提交评价</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="loading" wx:elif="{{loading}}">加载中…</view>

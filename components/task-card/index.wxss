@@ -1,0 +1,291 @@
+/**
+ * 任务卡：X（Twitter）式信息流条目。
+ * 结构固定为 A 身份行 / B 内容区 / C 标签区 / D 底部操作区，
+ * 卡片之间仅用一条 1rpx 分隔线，不为单个字段加边框或背景。
+ */
+.tm {
+  display: flex;
+  gap: 20rpx;
+  padding: 24rpx 24rpx 26rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+}
+
+.tm-hover {
+  background: #fafbfc;
+}
+
+/* 头像列固定宽度，右侧内容列承担全部自适应收缩 */
+.tm-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- A. 发布者身份行 ---------- */
+
+.tm-line1 {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  min-width: 0;
+}
+
+.tm-name {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 40rpx;
+  color: #1f2329;
+}
+
+/* 认证图标：蓝色小勾 + 简短文案，只出现一次，不堆叠 */
+.tm-verified {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5rpx;
+  font-size: 22rpx;
+  color: #1b6ef3;
+}
+
+.tm-verified-icon {
+  width: 26rpx;
+  height: 26rpx;
+  border-radius: 50%;
+  background: #1b6ef3;
+  color: #fff;
+  font-size: 16rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tm-verified-text {
+  line-height: 1;
+}
+
+.tm-verified.none {
+  color: #a5abb3;
+}
+
+/* 身份标签：企业 / 门店，中性灰 */
+.tm-idtag {
+  flex-shrink: 0;
+  height: 34rpx;
+  padding: 0 12rpx;
+  border-radius: 6rpx;
+  background: #f2f3f5;
+  color: #8a9099;
+  font-size: 22rpx;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tm-line2 {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 4rpx;
+  min-width: 0;
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: #8a9099;
+}
+
+.tm-org,
+.tm-role {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.tm-sep {
+  flex-shrink: 0;
+  color: #c9cdd4;
+}
+
+/* 时间靠右且不可压缩，长机构名只挤压自己所在的文本节点 */
+.tm-time {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 10rpx;
+}
+
+/* ---------- B. 任务内容区 ---------- */
+
+.tm-body {
+  margin-top: 14rpx;
+}
+
+.tm-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  line-height: 45rpx;
+  color: #1f2329;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.tm-desc {
+  margin-top: 8rpx;
+  font-size: 28rpx;
+  line-height: 44rpx;
+  color: #4e5969;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 元信息：地区 / 业务类别 / 工作量，超宽自动换行且不溢出 */
+.tm-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: #8a9099;
+}
+
+.tm-meta-i {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tm-meta-sep {
+  flex-shrink: 0;
+  margin: 0 8rpx;
+  color: #c9cdd4;
+}
+
+/* ---------- C. 标签区 ---------- */
+
+.tm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.tm-tag {
+  flex: 0 1 auto;
+  max-width: 100%;
+  height: 40rpx;
+  padding: 0 14rpx;
+  border-radius: 6rpx;
+  background: #f5f6f8;
+  color: #6b7280;
+  font-size: 22rpx;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 紧急程度等需要强调的信息 */
+.tm-tag.accent {
+  background: #fff2e8;
+  color: #e8710a;
+}
+
+/* ---------- 推荐理由（仅推荐列表） ---------- */
+
+.tm-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 12rpx;
+}
+
+.tm-reason-label {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  color: #a5abb3;
+  margin-right: 2rpx;
+}
+
+.tm-reason {
+  flex: 0 1 auto;
+  max-width: 100%;
+  height: 38rpx;
+  padding: 0 14rpx;
+  border-radius: 6rpx;
+  background: #eef4ff;
+  color: #1b6ef3;
+  font-size: 22rpx;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- D. 底部操作区 ---------- */
+
+.tm-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.tm-price {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 32rpx;
+  font-weight: 600;
+  line-height: 44rpx;
+  color: #e8710a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 价格面议：降级为次级信息，不使用强调色 */
+.tm-price-none {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #8a9099;
+}
+
+/* 右侧固定不收缩：状态标签自带 12rpx 右外边距，用于与「查看任务」间隔 */
+.tm-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.tm-enter {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #1b6ef3;
+}
+
+/* 「去报价」：接单人视角列表的主操作，独立于整卡点击 */
+.tm-quote {
+  flex-shrink: 0;
+  height: 52rpx;
+  padding: 0 24rpx;
+  border-radius: 26rpx;
+  background: #1b6ef3;
+  color: #fff;
+  font-size: 23rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}

@@ -1,0 +1,26 @@
+.quote-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 20rpx;
+}
+
+.amount {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #ff6a00;
+}
+
+.quote-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f2f3f5;
+}
+
+.link {
+  font-size: 24rpx;
+  color: #1b6ef3;
+}

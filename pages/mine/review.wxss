@@ -1,0 +1,62 @@
+.tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 1rpx solid #f2f3f5;
+  margin-bottom: 20rpx;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #4e5969;
+  position: relative;
+}
+
+.tab.active {
+  color: #1b6ef3;
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  background: #1b6ef3;
+}
+
+.review-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin: 0 24rpx 20rpx;
+}
+
+.card-foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f2f3f5;
+}
+
+.card-foot .btn {
+  flex: none;
+  padding: 0 32rpx;
+}
+
+.star {
+  font-size: 28rpx;
+  color: #dcdfe6;
+}
+
+.star.on {
+  color: #f7ba2a;
+}

@@ -1,0 +1,59 @@
+<view class="page">
+  <view class="card card-tight">
+    <view class="group-title">消息与通知</view>
+    <view class="switch-row">
+      <view class="flex1">
+        <text class="switch-title">站内消息</text>
+        <text class="muted">报价、订单、费用与社区互动提醒</text>
+      </view>
+      <switch checked="{{settings.inApp}}" color="#1b6ef3" data-key="inApp" bindchange="onToggle" />
+    </view>
+    <view class="switch-row">
+      <view class="flex1">
+        <text class="switch-title">订阅消息</text>
+        <text class="muted">需微信平台审核通过并按实际配置下发，可作为站内消息的补充</text>
+      </view>
+      <switch checked="{{settings.subscribe}}" color="#1b6ef3" data-key="subscribe" bindchange="onToggle" />
+    </view>
+  </view>
+
+  <view class="card card-tight">
+    <view class="group-title">资料可见范围</view>
+    <view class="switch-row">
+      <view class="flex1">
+        <text class="switch-title">向交易对方展示联系方式</text>
+        <text class="muted">成交后仅在订单详情中向双方展示，未成交时不公开</text>
+      </view>
+      <switch checked="{{settings.profileVisible}}" color="#1b6ef3" data-key="profileVisible" bindchange="onToggle" />
+    </view>
+    <view class="switch-row">
+      <view class="flex1">
+        <text class="switch-title">个性化推荐</text>
+        <text class="muted">V1 暂不提供智能推荐，开关保留用于后续版本</text>
+      </view>
+      <switch checked="{{settings.marketing}}" color="#1b6ef3" data-key="marketing" bindchange="onToggle" disabled />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">数据与账号</view>
+    <view class="list-item" style="padding-left:0;padding-right:0;" bindtap="showStatement">
+      <text>隐私说明与数据使用</text>
+      <view class="arrow"></view>
+    </view>
+    <view class="list-item" style="padding-left:0;padding-right:0;">
+      <text>敏感资料访问</text>
+      <text class="muted">仅授权人员可访问，操作留痕</text>
+    </view>
+    <view class="list-item" style="padding-left:0;padding-right:0;" bindtap="onDeleteAccount">
+      <text class="danger-text">注销账号</text>
+      <view class="arrow"></view>
+    </view>
+  </view>
+
+  <view class="tip">
+    所有业务接口均在服务端执行权限校验；报价修改权属于报价方，成交确认权属于有权限的需求方成员，订单资料仅向授权人员开放。
+  </view>
+
+  <view class="logout" bindtap="onLogout">退出登录</view>
+</view>

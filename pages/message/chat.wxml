@@ -1,0 +1,80 @@
+<view class="chat-page" wx:if="{{chat}}">
+  <scroll-view class="chat-scroll" scroll-y scroll-into-view="{{scrollInto}}" scroll-with-animation enhanced show-scrollbar="{{false}}">
+    <view class="chat-tip">私聊内容仅双方可见，请注意不要发送客户证件、财务资料等敏感信息。</view>
+
+    <view class="chat-biz" wx:if="{{chat.bizId && chat.bizLabel}}" bindtap="goBiz">
+      <view class="flex1" style="min-width:0;">
+        <text class="chat-biz-label">{{chat.bizLabel}}</text>
+        <text class="chat-biz-subject ellipsis">{{chat.subject}}</text>
+      </view>
+      <text class="chat-biz-more">查看 ›</text>
+    </view>
+
+    <view class="chat-empty" wx:if="{{messages.length === 0}}">
+      <text>还没有消息，发送第一条消息打个招呼吧</text>
+    </view>
+
+    <block wx:for="{{messages}}" wx:key="id">
+      <view class="chat-time" wx:if="{{item.showTime}}">{{item.timeText}}</view>
+      <view class="chat-row {{item.mine ? 'mine' : ''}} {{item.groupStart ? '' : 'continued'}}">
+        <!-- 连续同人消息只在首条渲染头像，后续保留等宽占位以维持对齐 -->
+        <view class="chat-avatar">
+          <user-avatar
+            wx:if="{{item.groupStart}}"
+            view="{{item.mine ? chat.myAvatar : chat.peerAvatar}}"
+            size="{{72}}"
+            show-tags="{{!item.mine}}"
+            tags="{{chat.peerAvatar.tags}}"
+          />
+        </view>
+        <view class="bubble-wrap">
+          <image
+            wx:if="{{item.type === 'image'}}"
+            class="bubble-image"
+            src="{{item.content}}"
+            mode="widthFix"
+            data-src="{{item.content}}"
+            bindtap="previewImage"
+          />
+          <view wx:else class="bubble">{{item.content}}</view>
+        </view>
+      </view>
+    </block>
+
+    <view class="chat-anchor" id="anchor"></view>
+  </scroll-view>
+
+  <view class="quick-bar">
+    <scroll-view scroll-x>
+      <view class="quick-list">
+        <view
+          class="quick-item"
+          wx:for="{{quickReplies}}"
+          wx:key="*this"
+          data-text="{{item}}"
+          bindtap="onQuickTap"
+        >{{item}}</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="chat-input-bar">
+    <input
+      class="chat-input"
+      value="{{input}}"
+      placeholder="输入消息…"
+      placeholder-class="placeholder"
+      confirm-type="send"
+      confirm-hold="{{false}}"
+      cursor-spacing="16"
+      bindinput="onInput"
+      bindconfirm="onSend"
+    />
+    <view class="icon-btn" bindtap="onChooseImage">图片</view>
+    <view class="send-btn {{input ? 'active' : ''}}" bindtap="onSend">{{sending ? '发送中' : '发送'}}</view>
+  </view>
+</view>
+
+<view class="page" wx:elif="{{loading}}">
+  <view class="loading-tip">加载中…</view>
+</view>

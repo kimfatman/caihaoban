@@ -1,0 +1,69 @@
+.task-bar {
+  margin-bottom: 0;
+}
+
+.task-bar .title {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+}
+
+.quote-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin: 20rpx 24rpx 0;
+}
+
+.quote-card .amount {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #ff6a00;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+.org-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1f2329;
+  max-width: 360rpx;
+}
+
+.quote-meta {
+  margin-top: 16rpx;
+  padding: 12rpx 16rpx;
+  background: #f9fafb;
+  border-radius: 12rpx;
+}
+
+.quote-meta .kv {
+  padding: 6rpx 0;
+}
+
+.quote-remark {
+  display: block;
+  margin-top: 14rpx;
+  font-size: 25rpx;
+  color: #4e5969;
+  line-height: 1.65;
+}
+
+.quote-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16rpx;
+  margin-top: 18rpx;
+}
+
+.quote-actions .btn {
+  flex: none;
+  padding: 0 24rpx;
+}
+
+.tip-bottom {
+  padding: 28rpx 32rpx 40rpx;
+  font-size: 22rpx;
+  color: #8a9099;
+  line-height: 1.7;
+}

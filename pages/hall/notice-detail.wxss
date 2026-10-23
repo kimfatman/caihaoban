@@ -1,0 +1,228 @@
+.nd-head {
+  background: #fff;
+  padding: 28rpx 24rpx 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.nd-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.nd-badges .tag {
+  margin-right: 0;
+}
+
+.nd-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #1f2329;
+}
+
+.nd-meta {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  color: #a5abb3;
+}
+
+.nd-dot {
+  color: #d5d9df;
+}
+
+/* 非公开状态提示：颜色随状态区分，不做花哨插画 */
+.nd-status {
+  margin: 0 24rpx 20rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 16rpx;
+  background: #fff8ed;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.nd-status-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #b25f00;
+}
+
+.nd-status-text {
+  font-size: 23rpx;
+  line-height: 1.6;
+  color: #97600a;
+}
+
+.nd-status-rejected {
+  background: #fdecec;
+}
+
+.nd-status-rejected .nd-status-title {
+  color: #c93030;
+}
+
+.nd-status-rejected .nd-status-text {
+  color: #a03030;
+}
+
+.nd-status-expired,
+.nd-status-offline {
+  background: #f5f6f8;
+}
+
+.nd-status-expired .nd-status-title,
+.nd-status-offline .nd-status-title {
+  color: #6b7280;
+}
+
+.nd-status-expired .nd-status-text,
+.nd-status-offline .nd-status-text {
+  color: #8a9099;
+}
+
+/* ---------- 发布者 ---------- */
+
+.nd-pub {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.nd-pub-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2329;
+  max-width: 260rpx;
+}
+
+.block-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.nd-content {
+  display: block;
+  font-size: 27rpx;
+  line-height: 1.8;
+  color: #4e5969;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---------- 联系方式 ---------- */
+
+.nd-contact {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 12rpx;
+  background: #f7f8fa;
+}
+
+.nd-contact-value {
+  flex: 1;
+  min-width: 0;
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: #1f2329;
+  word-break: break-all;
+}
+
+.nd-contact-action {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #1b6ef3;
+}
+
+/* ---------- 推广套餐 ---------- */
+
+.nd-demo {
+  display: inline-flex;
+  align-items: center;
+  height: 40rpx;
+  padding: 0 16rpx;
+  margin-bottom: 18rpx;
+  border-radius: 8rpx;
+  background: #fef4e6;
+  color: #b25f00;
+  font-size: 21rpx;
+}
+
+.nd-plans {
+  display: flex;
+  gap: 20rpx;
+}
+
+.nd-plan {
+  flex: 1;
+  min-width: 0;
+  padding: 22rpx 20rpx;
+  border-radius: 16rpx;
+  border: 1rpx solid #e6e9ee;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.nd-plan-hover {
+  background: #f7f9fc;
+}
+
+.nd-plan-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1f2329;
+}
+
+.nd-plan-price {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #e8710a;
+}
+
+.nd-plan-days {
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+.nd-plan-desc {
+  margin-top: 4rpx;
+  font-size: 21rpx;
+  line-height: 1.5;
+  color: #a5abb3;
+}
+
+.nd-plan-current {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 12rpx;
+  background: #f7f8fa;
+}
+
+.nd-plan-current .tag {
+  margin-right: 0;
+}
+
+.nd-plan-current .nd-plan-price {
+  margin-left: auto;
+  font-size: 28rpx;
+}
+
+.nd-loading {
+  padding: 140rpx 48rpx;
+  text-align: center;
+  font-size: 26rpx;
+  line-height: 1.7;
+  color: #8a9099;
+}

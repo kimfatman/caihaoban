@@ -1,0 +1,82 @@
+.loading-tip {
+  padding: 120rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--muted);
+}
+
+.pd-head {
+  display: flex;
+  gap: 24rpx;
+  padding: 32rpx 24rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.pd-head-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.pd-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  min-width: 0;
+}
+
+.pd-name {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pd-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 12rpx;
+}
+
+.pd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.pd-stats {
+  display: flex;
+  gap: 24rpx;
+}
+
+.pd-stat {
+  flex: 1;
+  min-width: 0;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.pd-stat-value {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.pd-stat-label {
+  font-size: 22rpx;
+  color: var(--muted);
+}
+
+.paragraph {
+  font-size: 26rpx;
+  line-height: 1.7;
+  color: var(--text-2);
+}

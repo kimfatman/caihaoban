@@ -1,0 +1,70 @@
+<view class="page" wx:if="{{order}}">
+  <view class="card">
+    <text class="title ellipsis">{{order.taskTitle}}</text>
+    <view class="row mt8" style="gap:12rpx;">
+      <text class="tag tag-plain">{{order.no}}</text>
+      <text class="tag tag-plain">应结总额 {{order.totalText}}</text>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">申报类型</view>
+    <view class="row" style="gap:16rpx;">
+      <view class="type-btn {{type === 'pay' ? 'active' : ''}}" data-type="pay" bindtap="switchType">
+        付款申报（需求方）
+      </view>
+      <view class="type-btn {{type === 'receive' ? 'active' : ''}}" data-type="receive" bindtap="switchType">
+        收款申报（承接方）
+      </view>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">申报金额（元）</view>
+    <input
+      class="form-input amount-input"
+      type="digit"
+      value="{{amount}}"
+      placeholder="请输入本次付款或收款金额"
+      placeholder-class="placeholder"
+      bindinput="onAmountInput"
+    />
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">申报说明</view>
+    <textarea
+      class="form-textarea"
+      value="{{remark}}"
+      maxlength="200"
+      placeholder="如：首期款 50%，已于 10 月 20 日银行转账，附回单"
+      placeholder-class="placeholder"
+      bindinput="onRemarkInput"
+    />
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">转账凭证</view>
+    <view class="upload-grid">
+      <view class="upload-item" wx:for="{{files}}" wx:key="path">
+        <image src="{{item.path}}" mode="aspectFill" />
+        <view class="del" data-index="{{index}}" bindtap="removeFile">×</view>
+      </view>
+      <view class="upload-add" bindtap="chooseFiles">
+        <text class="plus">+</text>
+        <text>上传凭证</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="notice">
+    平台仅记录双方申报与确认结果，不提供资金支付、托管或结算服务；请勿在说明中填写完整银行账号。
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+      {{submitting ? '提交中…' : '提交申报'}}
+    </view>
+  </view>
+</view>

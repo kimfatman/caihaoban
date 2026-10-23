@@ -1,0 +1,222 @@
+/* ---------------- 为我推荐（紧凑列表项，非卡片） ---------------- */
+
+.recommend-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid var(--line);
+}
+
+.recommend-row-hover {
+  background: #fafbfc;
+}
+
+.recommend-icon {
+  flex-shrink: 0;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 14rpx;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recommend-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.recommend-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.recommend-sub {
+  font-size: 22rpx;
+  color: var(--muted);
+}
+
+.msg-tabs {
+  display: flex;
+  background: #fff;
+  padding: 0 24rpx;
+  border-bottom: 1rpx solid var(--line);
+  margin-bottom: 20rpx;
+}
+
+.msg-tab {
+  position: relative;
+  height: 88rpx;
+  margin-right: 56rpx;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  color: var(--text-2);
+}
+
+.msg-tab.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.msg-tab.active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 40rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  background: var(--primary);
+  transform: translateX(-50%);
+}
+
+.tab-badge {
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 8rpx;
+  margin-left: 8rpx;
+  border-radius: 16rpx;
+  background: var(--danger);
+  color: #fff;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.chat-badge {
+  position: absolute;
+  top: -6rpx;
+  right: -6rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 8rpx;
+  border-radius: 16rpx;
+  background: var(--danger);
+  color: #fff;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.msg-header {
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.type-scroll {
+  white-space: nowrap;
+}
+
+.chip {
+  height: 56rpx;
+  padding: 0 22rpx;
+  font-size: 24rpx;
+}
+
+.msg-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx 20rpx;
+}
+
+.link {
+  font-size: 24rpx;
+  color: #1b6ef3;
+}
+
+.msg-list {
+  background: #fff;
+}
+
+.msg-item {
+  display: flex;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #f2f3f5;
+}
+
+.msg-item:last-child {
+  border-bottom: none;
+}
+
+.msg-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 16rpx;
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.msg-icon.order {
+  background: #e8f8ef;
+  color: #12b76a;
+}
+
+.msg-icon.fee {
+  background: #fef4e6;
+  color: #f79009;
+}
+
+.msg-icon.community {
+  background: #f2ecfe;
+  color: #7a4ff2;
+}
+
+.msg-icon.system {
+  background: #f2f3f5;
+  color: #8a9099;
+}
+
+.msg-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  min-width: 0;
+}
+
+.msg-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2329;
+}
+
+.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: #e54545;
+}
+
+.msg-content {
+  font-size: 25rpx;
+  color: #4e5969;
+  line-height: 1.55;
+}
+
+.msg-type {
+  font-size: 20rpx;
+  color: #b7bcc4;
+}

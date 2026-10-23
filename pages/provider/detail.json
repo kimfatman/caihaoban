@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "服务者主页",
+  "usingComponents": {
+    "user-avatar": "/components/user-avatar/index"
+  }
+}

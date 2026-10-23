@@ -1,0 +1,60 @@
+.block-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.reason-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #f2f3f5;
+}
+
+.reason-item:last-child {
+  border-bottom: none;
+}
+
+.reason-text {
+  font-size: 27rpx;
+  color: #4e5969;
+  flex: 1;
+  line-height: 1.5;
+}
+
+.reason-item.active .reason-text {
+  color: #1b6ef3;
+  font-weight: 500;
+}
+
+.radio {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #dcdfe6;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  position: relative;
+}
+
+.radio.on {
+  border-color: #1b6ef3;
+}
+
+.radio.on::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: #1b6ef3;
+}
+
+.form-item {
+  border-bottom: none;
+  margin-bottom: 20rpx;
+}

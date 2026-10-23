@@ -1,0 +1,43 @@
+<view class="page" wx:if="{{profile}}">
+  <view class="status-card">
+    <view class="between">
+      <view>
+        <text class="status-title">{{profile.idVerified ? '实名认证已完成' : '完成实名认证'}}</text>
+        <text class="status-sub">{{profile.idVerified ? '可发布任务、提交报价与参与社区互动' : '认证后才能发布任务与报价'}}</text>
+      </view>
+      <text class="tag {{profile.idVerified ? 'tag-success' : 'tag-warn'}}">{{profile.idVerified ? '已认证' : '未认证'}}</text>
+    </view>
+    <view class="kv mt16"><text class="k">姓名</text><text class="v">{{profile.realName}}</text></view>
+    <view class="kv"><text class="k">手机号</text><text class="v">{{profile.phoneMasked}}</text></view>
+  </view>
+
+  <block wx:if="{{!profile.idVerified}}">
+    <view class="form-item">
+      <view class="form-label required">真实姓名</view>
+      <input class="form-input" value="{{realName}}" data-field="realName" bindinput="onInput" placeholder="与身份证一致" placeholder-class="placeholder" />
+    </view>
+    <view class="form-item">
+      <view class="form-label required">身份证号</view>
+      <input class="form-input" value="{{idNumber}}" data-field="idNumber" bindinput="onInput" maxlength="18" placeholder="仅用于实名核验，不对外展示" placeholder-class="placeholder" />
+    </view>
+    <view class="notice">证件信息仅用于实名核验，平台按最小必要原则存储，运营后台访问需授权并留存审计日志。</view>
+    <view class="footer-holder"></view>
+    <view class="footer-bar">
+      <view class="btn btn-primary {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">{{submitting ? '提交中…' : '提交认证'}}</view>
+    </view>
+  </block>
+
+  <view class="card">
+    <view class="block-title">机构认证状态</view>
+    <view class="org-item" wx:for="{{profile.memberships}}" wx:key="orgId">
+      <view class="flex1">
+        <text class="org-name">{{item.orgName}}</text>
+        <text class="muted">{{item.orgType === 'store' ? '门店' : '企业'}}</text>
+      </view>
+      <text class="tag {{item.orgStatus === 'verified' ? 'tag-success' : 'tag-warn'}}">
+        {{item.orgStatus === 'verified' ? '已认证' : '审核中'}}
+      </text>
+    </view>
+    <view class="form-tip">机构资料审核由平台运营在后台完成，审核结果会通过消息通知。</view>
+  </view>
+</view>

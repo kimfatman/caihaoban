@@ -1,0 +1,61 @@
+.hero {
+  background: #fff;
+  border-bottom: 1rpx solid #f2f3f5;
+  padding: 32rpx 24rpx 36rpx;
+  margin-bottom: 20rpx;
+}
+
+.hero-label {
+  font-size: 26rpx;
+  color: #8a9099;
+}
+
+.hero-amount {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 56rpx;
+  font-weight: 600;
+  color: #ff6a00;
+  line-height: 1.2;
+}
+
+.hero-sub {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8a9099;
+}
+
+.org-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.block-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.paragraph {
+  display: block;
+  font-size: 27rpx;
+  color: #4e5969;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.version-remark {
+  display: block;
+  margin-top: 6rpx;
+  line-height: 1.6;
+}
+
+.tip-bottom {
+  padding: 12rpx 32rpx 40rpx;
+  font-size: 22rpx;
+  color: #8a9099;
+  line-height: 1.7;
+}

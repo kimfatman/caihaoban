@@ -1,0 +1,32 @@
+.task-summary .title {
+  font-size: 30rpx;
+  margin-right: 16rpx;
+}
+
+.amount-input {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #ff6a00;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.form-textarea.short {
+  min-height: 100rpx;
+}
+
+.file-text {
+  font-size: 20rpx;
+  padding: 0 12rpx;
+  text-align: center;
+  color: #4e5969;
+  word-break: break-all;
+}
+
+.form-group {
+  margin-bottom: 20rpx;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}

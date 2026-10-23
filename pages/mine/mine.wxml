@@ -1,0 +1,138 @@
+<view class="page" wx:if="{{profile}}">
+  <view class="profile-head">
+    <view class="row" style="gap:20rpx;">
+      <user-avatar view="{{profile.avatarView}}" size="{{120}}" tags="{{profile.avatarTags}}" />
+      <view class="flex1">
+        <view class="row" style="gap:12rpx;">
+          <text class="name">{{profile.nickname}}</text>
+          <text class="tag {{profile.idVerified ? 'tag-success' : 'tag-warn'}}">
+            {{profile.idVerified ? '已实名' : '未实名'}}
+          </text>
+        </view>
+        <text class="muted">{{profile.title || '未设置职位'}} · {{profile.phoneMasked}}</text>
+      </view>
+      <view class="btn btn-sm btn-ghost" data-url="/pages/mine/profile" bindtap="go">编辑</view>
+    </view>
+
+    <view class="org-row" bindtap="switchOrg">
+      <view class="flex1">
+        <text class="org-name">{{currentOrg.orgName}}</text>
+        <text class="org-role">{{roleLabel}}{{memberships.length > 1 ? ' · 点击切换机构' : ''}}</text>
+      </view>
+      <view class="arrow"></view>
+    </view>
+
+    <view class="stats">
+      <view class="stat" data-url="/pages/mine/my-tasks" bindtap="go">
+        <text class="stat-value">{{profile.stats.published}}</text>
+        <text class="stat-label">发布任务</text>
+      </view>
+      <view class="stat" data-url="/pages/mine/my-quotes" bindtap="go">
+        <text class="stat-value">{{profile.stats.quotes}}</text>
+        <text class="stat-label">我的报价</text>
+      </view>
+      <view class="stat" data-role="all" bindtap="goOrders">
+        <text class="stat-value">{{profile.stats.orders}}</text>
+        <text class="stat-label">订单</text>
+      </view>
+      <view class="stat" data-url="/pages/mine/contents" bindtap="go">
+        <text class="stat-value">{{profile.stats.topics}}</text>
+        <text class="stat-label">社区内容</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card card-tight">
+    <view class="group-title">我的业务</view>
+    <view class="list-item" data-url="/pages/mine/service-profile" bindtap="go">
+      <text>我的服务能力</text>
+      <view class="row">
+        <text class="muted">{{serviceProfileHint}}</text>
+        <view class="arrow"></view>
+      </view>
+    </view>
+    <view class="list-item" data-url="/pages/hall/recommend" bindtap="go">
+      <text>为我推荐的任务</text>
+      <view class="row">
+        <text class="muted">按服务能力匹配</text>
+        <view class="arrow"></view>
+      </view>
+    </view>
+    <view class="list-item" data-url="/pages/mine/my-tasks" bindtap="go">
+      <text>我发布的任务</text>
+      <view class="row"><text class="muted">管理任务与报价</text><view class="arrow"></view></view>
+    </view>
+    <view class="list-item" data-url="/pages/mine/my-quotes" bindtap="go">
+      <text>我的报价</text>
+      <view class="row"><text class="muted">含历史版本</text><view class="arrow"></view></view>
+    </view>
+    <view class="list-item" data-role="demand" bindtap="goOrders">
+      <text>我发布的订单</text>
+      <view class="arrow"></view>
+    </view>
+    <view class="list-item" data-role="supply" bindtap="goOrders">
+      <text>我承接的订单</text>
+      <view class="arrow"></view>
+    </view>
+    <view class="list-item" data-url="/pages/mine/review" bindtap="go">
+      <text>服务记录与评价</text>
+      <view class="arrow"></view>
+    </view>
+  </view>
+
+  <view class="card card-tight">
+    <view class="group-title">我的社区</view>
+    <view class="list-item" data-url="/pages/mine/contents" bindtap="go">
+      <text>我的话题、评论与收藏</text>
+      <view class="arrow"></view>
+    </view>
+    <view class="list-item" bindtap="goMessage">
+      <text>消息通知</text>
+      <view class="row">
+        <text class="badge" wx:if="{{unread > 0}}">{{unread}}</text>
+        <view class="arrow"></view>
+      </view>
+    </view>
+    <view class="list-item" bindtap="goChat">
+      <text>我的私聊</text>
+      <view class="row">
+        <text class="badge" wx:if="{{chatUnread > 0}}">{{chatUnread}}</text>
+        <view class="arrow"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card card-tight">
+    <view class="group-title">机构与资料</view>
+    <view class="list-item" data-url="/pages/mine/profile" bindtap="go">
+      <text>个人资料</text>
+      <view class="arrow"></view>
+    </view>
+    <view class="list-item" data-url="/pages/mine/identity" bindtap="go">
+      <text>身份信息与认证</text>
+      <view class="row">
+        <text class="muted">{{profile.idVerified ? '已认证' : '待认证'}}</text>
+        <view class="arrow"></view>
+      </view>
+    </view>
+    <view class="list-item" data-url="/pages/mine/org-list" bindtap="go">
+      <text>企业、门店及成员管理</text>
+      <view class="row"><text class="muted">{{memberships.length}} 个机构</text><view class="arrow"></view></view>
+    </view>
+  </view>
+
+  <view class="card card-tight">
+    <view class="group-title">其他</view>
+    <view class="list-item" data-url="/pages/mine/privacy" bindtap="go">
+      <text>隐私授权与账号</text>
+      <view class="arrow"></view>
+    </view>
+    <view class="list-item" data-url="/pages/mine/feedback" bindtap="go">
+      <text>意见反馈</text>
+      <view class="arrow"></view>
+    </view>
+  </view>
+
+  <view class="logout" bindtap="logout">退出登录</view>
+  <view class="version">企服协作 V1.0.0 · 示例数据仅用于功能演示</view>
+</view>

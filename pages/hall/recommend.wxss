@@ -1,0 +1,80 @@
+.rc-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 18rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.rc-tab {
+  flex-shrink: 0;
+  height: 56rpx;
+  padding: 0 22rpx;
+  border-radius: 28rpx;
+  background: #f5f6f8;
+  color: #6b7280;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+}
+
+.rc-tab.active {
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-weight: 500;
+}
+
+.rc-count {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 22rpx;
+  color: #a5abb3;
+}
+
+.rc-hint {
+  padding: 16rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f1f3;
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: #8a9099;
+}
+
+.loading-tip {
+  padding: 120rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: #8a9099;
+}
+
+.rc-error {
+  margin: 40rpx 24rpx;
+  padding: 40rpx 24rpx;
+  border-radius: 16rpx;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.rc-error-text {
+  font-size: 26rpx;
+  color: #8a9099;
+  text-align: center;
+}
+
+.rc-more {
+  padding: 32rpx 0 8rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #a5abb3;
+}
+
+.footer-holder {
+  height: 40rpx;
+}

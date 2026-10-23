@@ -1,0 +1,81 @@
+<view class="page" wx:if="{{order}}">
+  <view class="card">
+    <text class="title ellipsis">{{order.taskTitle}}</text>
+    <view class="row mt8" style="gap:12rpx;">
+      <text class="tag tag-plain">{{order.no}}</text>
+      <text class="tag tag-plain">应结总额 {{order.totalText}}</text>
+    </view>
+  </view>
+
+  <block wx:if="{{order.dispute}}">
+    <view class="card">
+      <view class="between">
+        <text class="block-title" style="margin-bottom:0;">争议记录</text>
+        <status-tag label="{{order.dispute.statusLabel}}" tag="{{order.dispute.status === 'processing' ? 'tag-danger' : 'tag-success'}}" />
+      </view>
+      <view class="kv"><text class="k">发起人</text><text class="v">{{order.dispute.createdByName}}</text></view>
+      <view class="kv"><text class="k">发起时间</text><text class="v">{{order.dispute.createdAtText}}</text></view>
+      <view class="kv"><text class="k">材料</text><text class="v">{{order.dispute.files.length}} 个附件</text></view>
+      <view class="line"></view>
+      <text class="desc">{{order.dispute.reason}}</text>
+    </view>
+
+    <view class="card">
+      <view class="block-title">平台处理进度</view>
+      <view class="dispute-note">{{order.dispute.handlerNote || '处理中'}}</view>
+      <view class="timeline-item active" wx:for="{{order.dispute.records}}" wx:key="at">
+        <view class="between">
+          <text class="desc">{{item.action}}</text>
+          <text class="muted">{{item.atText}}</text>
+        </view>
+        <text class="muted">{{item.by}}</text>
+        <text class="muted" wx:if="{{item.remark}}">{{item.remark}}</text>
+      </view>
+    </view>
+
+    <view class="notice">
+      争议处理期间订单暂停推进。平台将根据双方提交的材料与操作记录给出处理结果，处理结果会同步至双方消息通知。
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="notice">
+      发起争议前请先与对方沟通。平台将查看双方提交的材料、订单操作记录与费用确认结果后进行判定。
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">争议说明</view>
+      <textarea
+        class="form-textarea"
+        value="{{reason}}"
+        maxlength="500"
+        placeholder="请说明争议焦点、已沟通情况与你的诉求（至少 10 个字）"
+        placeholder-class="placeholder"
+        bindinput="onReasonInput"
+      />
+      <view class="form-tip">{{reason.length}}/500</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">证明材料</view>
+      <view class="upload-grid">
+        <view class="upload-item" wx:for="{{files}}" wx:key="path">
+          <image src="{{item.path}}" mode="aspectFill" />
+          <view class="del" data-index="{{index}}" bindtap="removeFile">×</view>
+        </view>
+        <view class="upload-add" bindtap="chooseFiles">
+          <text class="plus">+</text>
+          <text>上传材料</text>
+        </view>
+      </view>
+      <view class="form-tip">请上传沟通记录、交付成果等材料，注意脱敏客户敏感信息。</view>
+    </view>
+
+    <view class="footer-holder"></view>
+    <view class="footer-bar">
+      <view class="btn btn-danger {{submitting ? 'btn-disabled' : ''}}" bindtap="onSubmit">
+        {{submitting ? '提交中…' : '提交争议申请'}}
+      </view>
+    </view>
+  </block>
+</view>

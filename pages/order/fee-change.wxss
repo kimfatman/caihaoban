@@ -1,0 +1,12 @@
+.amount-input {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #ff6a00;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.form-item {
+  border-bottom: none;
+  margin-bottom: 20rpx;
+}

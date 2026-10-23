@@ -1,0 +1,28 @@
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.category-list .chip {
+  height: 60rpx;
+  background: #f5f6f8;
+}
+
+.category-list .chip.active {
+  background: #1b6ef3;
+  color: #fff;
+}
+
+.form-item {
+  border-bottom: none;
+  margin-bottom: 20rpx;
+}
+
+.file-text {
+  font-size: 20rpx;
+  padding: 0 12rpx;
+  text-align: center;
+  color: #4e5969;
+  word-break: break-all;
+}

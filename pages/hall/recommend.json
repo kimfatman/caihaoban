@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "为我推荐",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "task-card": "/components/task-card/index",
+    "empty-state": "/components/empty-state/index"
+  }
+}

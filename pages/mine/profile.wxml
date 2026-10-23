@@ -1,0 +1,62 @@
+<view class="page" wx:if="{{profile}}">
+  <view class="card avatar-card">
+    <view class="block-title">我的头像</view>
+    <view class="avatar-preview">
+      <user-avatar view="{{profile.avatarView}}" size="{{150}}" tags="{{profile.avatarTags}}" />
+      <view class="avatar-preview-meta">
+        <text class="avatar-preview-name">{{profile.nickname}}</text>
+        <text class="muted">{{profile.idVerified ? '已实名认证' : '未实名认证'}}</text>
+        <text class="muted" wx:if="{{profile.avatar}}">当前为自定义头像</text>
+        <text class="muted" wx:else>当前为默认头像</text>
+      </view>
+    </view>
+
+    <view class="avatar-actions">
+      <!-- 微信官方「头像填写能力」：点击后由用户确认授权，返回头像临时文件 -->
+      <button
+        class="btn btn-sm btn-primary pick-btn"
+        open-type="chooseAvatar"
+        bindchooseavatar="onWechatAvatar"
+      >一键使用微信头像</button>
+      <view class="btn btn-sm" bindtap="onPickAvatar">从相册选择</view>
+      <view class="btn btn-sm btn-ghost" wx:if="{{profile.avatar}}" bindtap="onResetAvatar">恢复默认</view>
+    </view>
+    <view class="form-tip">
+      使用微信头像需基础库 2.21.2 及以上；若按钮无响应，可改用「从相册选择」。
+    </view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">昵称</view>
+    <input class="form-input" value="{{nickname}}" maxlength="20" data-field="nickname" bindinput="onInput" placeholder="请输入昵称" placeholder-class="placeholder" />
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">职位</view>
+    <input class="form-input" value="{{title}}" maxlength="20" data-field="title" bindinput="onInput" placeholder="如：业务负责人" placeholder-class="placeholder" />
+  </view>
+
+  <view class="form-item">
+    <view class="form-label required">手机号</view>
+    <input class="form-input" type="number" value="{{phone}}" maxlength="11" data-field="phone" bindinput="onInput" placeholder="用于接收订单与机构通知" placeholder-class="placeholder" />
+    <view class="form-tip">手机号仅向交易对方与同机构成员展示部分号码。</view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">我的机构身份</view>
+    <view class="org-item" wx:for="{{profile.memberships}}" wx:key="orgId">
+      <view class="flex1">
+        <text class="org-name">{{item.orgName}}</text>
+        <text class="muted">{{item.orgType === 'store' ? '门店' : '企业'}} · {{item.role === 'owner' ? '负责人' : item.role === 'admin' ? '管理员' : '成员'}}</text>
+      </view>
+      <text class="tag {{item.orgStatus === 'verified' ? 'tag-success' : 'tag-warn'}}">
+        {{item.orgStatus === 'verified' ? '已认证' : '审核中'}}
+      </text>
+    </view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <view class="btn btn-primary {{saving ? 'btn-disabled' : ''}}" bindtap="onSave">{{saving ? '保存中…' : '保存资料'}}</view>
+  </view>
+</view>

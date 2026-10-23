@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "机构管理",
+  "usingComponents": {
+    "user-avatar": "/components/user-avatar/index"
+  }
+}

@@ -1,0 +1,80 @@
+<view class="page" wx:if="{{org}}">
+  <view class="card">
+    <view class="between">
+      <text class="title flex1" style="margin-right:16rpx;">{{org.name}}</text>
+      <text class="tag {{org.statusTag}}">{{org.statusLabel}}</text>
+    </view>
+    <view class="row mt8" style="gap:12rpx;">
+      <text class="tag tag-plain">{{org.typeLabel}}</text>
+      <text class="tag tag-plain">{{org.roleLabel}}</text>
+    </view>
+    <view class="line"></view>
+    <view class="kv" wx:if="{{org.creditCode}}"><text class="k">统一社会信用代码</text><text class="v">{{org.creditCode}}</text></view>
+    <view class="kv"><text class="k">所在地区</text><text class="v">{{org.region}}</text></view>
+    <view class="kv"><text class="k">详细地址</text><text class="v">{{org.address}}</text></view>
+    <view class="kv"><text class="k">联系人</text><text class="v">{{org.contactName}} {{org.contactPhone}}</text></view>
+    <view class="kv" wx:if="{{org.parentName}}"><text class="k">所属企业</text><text class="v">{{org.parentName}}</text></view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">我的权限</view>
+    <view class="permission-list">
+      <text class="permission" wx:for="{{permissionLabels}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="form-tip">任务成交确认、订单验收等关键操作仅向有权限的成员开放。</view>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <text class="block-title" style="margin-bottom:0;">成员管理</text>
+      <view class="btn btn-sm btn-ghost" wx:if="{{org.canManage}}" bindtap="openAdd">添加成员</view>
+    </view>
+
+    <view class="member-item" wx:for="{{org.members}}" wx:key="memberId">
+      <user-avatar view="{{item.avatarView}}" size="{{64}}" tags="{{item.avatarView.tags}}" />
+      <view class="flex1">
+        <view class="row" style="gap:10rpx;">
+          <text class="member-name">{{item.name}}</text>
+          <text class="tag {{item.role === 'owner' ? 'tag-primary' : 'tag-plain'}}">{{item.roleLabel}}</text>
+          <text class="tag tag-plain" wx:if="{{item.isSelf}}">我</text>
+        </view>
+        <text class="muted">{{item.title || '未设置职位'}} · {{item.phone}} · 加入于 {{item.joinedAtText}}</text>
+      </view>
+      <view class="member-actions" wx:if="{{org.canManage && !item.isSelf}}">
+        <text class="link" data-id="{{item.memberId}}" data-role="{{item.role}}" bindtap="changeRole">调整角色</text>
+        <text class="link danger" data-id="{{item.memberId}}" data-name="{{item.name}}" bindtap="removeMember">移除</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="notice">
+    机构资料与成员变更均记录操作日志；敏感资料访问权限由运营后台按需授权。
+  </view>
+
+  <view class="modal-mask" wx:if="{{showAdd}}" bindtap="closeAdd">
+    <view class="modal-panel" catchtap="noop">
+      <view class="modal-title">添加成员</view>
+      <view class="form-item" style="padding:16rpx 0;">
+        <view class="form-label">成员姓名</view>
+        <input class="form-input" value="{{addName}}" data-field="addName" bindinput="onAddInput" placeholder="请输入真实姓名" placeholder-class="placeholder" />
+      </view>
+      <view class="form-item" style="padding:16rpx 0;">
+        <view class="form-label">手机号</view>
+        <input class="form-input" type="number" maxlength="11" value="{{addPhone}}" data-field="addPhone" bindinput="onAddInput" placeholder="用于匹配或创建账号" placeholder-class="placeholder" />
+      </view>
+      <view class="form-item" style="padding:16rpx 0;">
+        <view class="form-label">角色</view>
+        <picker mode="selector" range="{{roleOptions}}" range-key="label" value="{{addRoleIndex}}" bindchange="onAddRoleChange">
+          <view class="picker-value">
+            <text>{{addRoleLabel}}</text>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+      </view>
+      <view class="btn-row mt24">
+        <view class="btn" bindtap="closeAdd">取消</view>
+        <view class="btn btn-primary" bindtap="submitAdd">确认添加</view>
+      </view>
+    </view>
+  </view>
+</view>

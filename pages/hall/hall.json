@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "任务大厅",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "task-card": "/components/task-card/index",
+    "empty-state": "/components/empty-state/index"
+  }
+}

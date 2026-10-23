@@ -1,0 +1,93 @@
+.form-group {
+  margin-top: 20rpx;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.req-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.req-chip {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 10rpx 16rpx;
+  border-radius: 8rpx;
+  background: #f5f6f8;
+  color: #4e5969;
+  font-size: 24rpx;
+}
+
+/* 必要资质多选 */
+.qual-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.qual-chip {
+  flex: 0 1 auto;
+  max-width: 100%;
+  min-height: 60rpx;
+  padding: 0 22rpx;
+  border-radius: 30rpx;
+  background: #f5f6f8;
+  color: #4e5969;
+  font-size: 24rpx;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.qual-chip.active {
+  background: #eaf1fe;
+  color: #1b6ef3;
+  font-weight: 500;
+}
+
+.req-del {
+  color: #8a9099;
+  font-size: 28rpx;
+  padding: 0 4rpx;
+}
+
+.file-text {
+  font-size: 20rpx;
+  padding: 0 12rpx;
+  text-align: center;
+  color: #4e5969;
+  word-break: break-all;
+}
+
+.preview-panel {
+  max-height: 86vh;
+}
+
+.preview-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 16rpx;
+}
+
+.preview-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #4e5969;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.req-preview {
+  margin-top: 12rpx;
+}
+
+.textarea-placeholder {
+  color: #b7bcc4;
+}

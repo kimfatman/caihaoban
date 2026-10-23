@@ -1,0 +1,206 @@
+<view class="page" wx:if="{{task}}">
+  <view class="hero">
+    <view class="hero-head">
+      <text class="hero-title">{{task.title}}</text>
+      <status-tag label="{{task.stateLabel}}" tag="{{task.stateTag}}" />
+    </view>
+    <view class="hero-tags">
+      <text class="tag tag-primary">{{task.serviceTypeLabel}}</text>
+      <text class="tag tag-plain">{{task.regionText}}</text>
+      <text class="tag tag-plain" wx:if="{{task.publisherName}}">{{task.publisherOrgType}}</text>
+    </view>
+    <view class="hero-meta">
+      <view class="meta-block">
+        <text class="meta-label">参考价</text>
+        <text class="meta-value price">{{task.referencePriceText}}</text>
+      </view>
+      <view class="meta-block">
+        <text class="meta-label">报价截止</text>
+        <text class="meta-value">{{task.quoteDeadlineText}}</text>
+        <text class="meta-sub" wx:if="{{task.countdown}}">{{task.countdown}}</text>
+      </view>
+      <view class="meta-block">
+        <text class="meta-label">期望完成</text>
+        <text class="meta-value">{{task.expectedFinishText}}</text>
+      </view>
+    </view>
+    <view class="hero-notice" wx:if="{{task.state === 'cancelled'}}">任务已于 {{task.cancelledText}} 取消：{{task.cancelReason}}</view>
+    <view class="hero-notice" wx:elif="{{task.state === 'expired'}}">报价已截止，不再接受新报价</view>
+    <view class="hero-notice" wx:elif="{{task.state === 'dealing'}}">该任务已成交，不再接受新报价</view>
+    <view class="hero-notice" wx:elif="{{task.state === 'closed'}}">该任务已关闭</view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">任务信息</view>
+    <view class="kv"><text class="k">服务类型</text><text class="v">{{task.serviceTypeLabel}}</text></view>
+    <view class="kv"><text class="k">服务区域</text><text class="v">{{task.regionText}}</text></view>
+    <view class="kv" wx:if="{{task.address}}"><text class="k">详细地址</text><text class="v">{{task.address}}</text></view>
+    <view class="kv"><text class="k">报价截止</text><text class="v">{{task.quoteDeadlineText}}</text></view>
+    <view class="kv"><text class="k">期望完成</text><text class="v">{{task.expectedFinishText}}</text></view>
+    <view class="kv"><text class="k">当前报价</text><text class="v">{{task.quoteCount}} 条</text></view>
+  </view>
+
+  <!-- 推荐接单人：仅任务发布方可见，由接口层做权限与硬条件筛选 -->
+  <view class="card rec-block" wx:if="{{recVisible}}">
+    <view class="between">
+      <view class="flex1">
+        <view class="block-title" style="margin-bottom:6rpx;">推荐接单人</view>
+        <text class="muted">按业务、地区与服务方式、历史履约、报价、接单能力综合排序</text>
+      </view>
+      <text class="rec-badge" wx:if="{{recList.length > 0}}">{{recTotal}} 位</text>
+    </view>
+
+    <view class="rec-relaxed" wx:if="{{recRelaxed}}">
+      <text class="rec-relaxed-text">已放宽地区与接单状态限制，以下人员需自行确认能否到场</text>
+      <text class="rec-relaxed-action" bindtap="onToggleRelax">恢复严格筛选</text>
+    </view>
+
+    <view class="rec-loading" wx:if="{{recLoading}}">正在匹配服务者…</view>
+
+    <view class="rec-error" wx:elif="{{recError}}">
+      <text class="muted">{{recError}}</text>
+      <view class="btn btn-sm" bindtap="onRetryRecommend">重试</view>
+    </view>
+
+    <block wx:elif="{{recList.length > 0}}">
+      <view class="rec-list">
+        <provider-card
+          wx:for="{{recList}}"
+          wx:key="userId"
+          item="{{item}}"
+          bind:invite="onInviteProvider"
+          bind:profile="onProviderProfile"
+        />
+      </view>
+      <view class="rec-more" wx:if="{{recHasMore}}" bindtap="loadMoreRecommend">
+        {{recLoadingMore ? '加载中…' : '查看更多推荐'}}
+      </view>
+      <view class="form-tip" wx:if="{{recExcluded > 0}}">
+        已排除 {{recExcluded}} 位在业务、地区、服务方式或资质上不满足要求的服务者。
+      </view>
+    </block>
+
+    <view class="rec-empty" wx:else>
+      <text class="rec-empty-text">{{recEmptyText || '暂无完全匹配的服务者'}}</text>
+      <view class="rec-empty-actions">
+        <view class="btn btn-sm btn-ghost" wx:if="{{!recRelaxed}}" bindtap="onToggleRelax">放宽地区与接单状态</view>
+        <view class="btn btn-sm" bindtap="goTaskHall">返回任务大厅</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">详细说明</view>
+    <text class="paragraph">{{task.description}}</text>
+  </view>
+
+  <view class="card" wx:if="{{task.requirements.length > 0}}">
+    <view class="block-title">服务要求</view>
+    <view class="req-item" wx:for="{{task.requirements}}" wx:key="*this">
+      <view class="dot"></view>
+      <text>{{item}}</text>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{task.attachments.length > 0}}">
+    <view class="block-title">附件</view>
+    <view
+      class="file-item"
+      wx:for="{{task.attachments}}"
+      wx:key="name"
+      data-file="{{item}}"
+      bindtap="onPreviewFile"
+    >
+      <view class="file-icon">附件</view>
+      <view class="file-info">
+        <text class="file-name ellipsis">{{item.name}}</text>
+        <text class="muted">{{item.size || ''}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="block-title">发布方</view>
+    <view class="org-row" bindtap="onCopyOrg">
+      <user-avatar view="{{task.publisherAvatar}}" size="{{80}}" tags="{{task.publisherAvatar.tags}}" />
+      <view class="flex1">
+        <view class="row">
+          <text class="org-name ellipsis">{{task.publisherOrgName}}</text>
+          <text class="tag {{task.publisherOrgStatus === 'verified' ? 'tag-success' : 'tag-warn'}}">
+            {{task.publisherOrgStatusLabel}}
+          </text>
+        </view>
+        <text class="muted">发布人：{{task.publisherName}} · {{task.publisherTitle}} · {{task.publisherOrgType}}</text>
+      </view>
+      <view class="btn btn-sm btn-ghost" style="flex-shrink:0;" wx:if="{{task.canChat}}" catchtap="onChatTap">私信</view>
+    </view>
+    <view class="cap-row cap-badges">
+      <view class="cap-badge {{item.level}}" wx:for="{{task.publisherCapabilityTags}}" wx:key="key">
+        <text class="cap-badge-icon">{{item.level === 'high' ? '✓' : item.level === 'mid' ? '·' : '!'}}</text>
+        <text>{{item.label}}</text>
+      </view>
+      <text class="cap-badge-summary">{{task.publisherCapabilityLabel}}</text>
+    </view>
+    <view class="form-tip">联系方式将在成交后于订单详情中向双方开放，点击上方卡片可复制机构名称。</view>
+  </view>
+
+  <view class="card quote-block" wx:if="{{task.isDemander}}">
+    <view class="between">
+      <view>
+        <view class="block-title" style="margin-bottom:6rpx;">报价管理</view>
+        <text class="muted">共 {{task.quoteCount}} 条有效报价，接受后自动生成订单</text>
+      </view>
+      <view class="btn btn-primary btn-sm" bindtap="onQuoteListTap">查看报价</view>
+    </view>
+  </view>
+
+  <view class="card quote-block" wx:elif="{{myQuote}}">
+    <view class="between">
+      <view>
+        <view class="block-title" style="margin-bottom:6rpx;">{{myQuote.isMine ? '我的报价' : '本机构报价'}}</view>
+        <text class="muted">当前版本 V{{myQuote.versionCount}} · {{myQuote.statusLabel}}</text>
+      </view>
+      <text class="price">{{myQuote.amountText}}</text>
+    </view>
+    <view class="form-tip">截止前可修改或撤回，每次修改都保留历史版本。</view>
+  </view>
+
+  <view class="card" wx:if="{{task.auditTrail.length > 0}}">
+    <view class="block-title">任务动态</view>
+    <view class="timeline-item active" wx:for="{{task.auditTrail}}" wx:key="at">
+      <view class="between">
+        <text class="desc">{{item.action}}</text>
+        <text class="muted">{{item.atText}}</text>
+      </view>
+      <text class="muted" wx:if="{{item.remark}}">{{item.remark}}</text>
+      <text class="muted">操作人：{{item.by}}</text>
+    </view>
+  </view>
+
+  <view class="footer-holder"></view>
+  <view class="footer-bar">
+    <block wx:if="{{task.canManage}}">
+      <view class="btn btn-ghost" bindtap="onCancelTap">取消任务</view>
+      <view class="btn" bindtap="onEditTap">编辑任务</view>
+      <view class="btn btn-primary" bindtap="onQuoteListTap">查看报价（{{task.quoteCount}}）</view>
+    </block>
+    <block wx:elif="{{myQuote}}">
+      <view class="btn btn-ghost" bindtap="onQuoteTap">修改 / 撤回报价</view>
+      <view class="btn btn-primary" bindtap="onQuoteListTap">我的报价详情</view>
+    </block>
+    <block wx:elif="{{task.orderId && task.isDemander}}">
+      <view class="btn btn-primary" bindtap="goOrder">查看已生成订单</view>
+    </block>
+    <block wx:elif="{{task.canQuote}}">
+      <view class="btn btn-ghost" bindtap="onChatTap">咨询发布方</view>
+      <view class="btn btn-primary" bindtap="onQuoteTap">立即报价</view>
+    </block>
+    <block wx:else>
+      <view class="btn btn-disabled">当前状态不可报价</view>
+    </block>
+  </view>
+</view>
+
+<view class="page" wx:elif="{{loading}}">
+  <view class="loading-tip">加载中…</view>
+</view>

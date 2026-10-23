@@ -1,0 +1,39 @@
+<view class="page">
+  <view class="tabs">
+    <view
+      class="tab {{role === item.value ? 'active' : ''}}"
+      wx:for="{{roles}}"
+      wx:key="value"
+      data-value="{{item.value}}"
+      bindtap="onRoleTap"
+    >{{item.label}}</view>
+  </view>
+
+  <scroll-view class="status-scroll" scroll-x>
+    <view class="chips">
+      <view
+        class="chip {{status === item.value ? 'active' : ''}}"
+        wx:for="{{statusList}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onStatusTap"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="list-summary" wx:if="{{!loading}}">共 {{total}} 个订单</view>
+
+  <block wx:if="{{list.length > 0}}">
+    <order-card wx:for="{{list}}" wx:key="id" order="{{item}}" bind:ordertap="onOrderTap" />
+  </block>
+
+  <empty-state
+    wx:elif="{{!loading}}"
+    text="暂无相关订单"
+    tip="任务成交后会在此生成订单，支持进度、凭证、费用与争议管理"
+    btnText="去任务大厅看看"
+    bind:action="goHall"
+  />
+
+  <view class="loading" wx:if="{{loading}}">加载中…</view>
+</view>
